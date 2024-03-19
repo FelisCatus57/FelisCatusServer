@@ -22,7 +22,7 @@ public class AuthUtil {
         UserDetails userDetails = (UserDetails) principal;
 
         User findUser = userRepository.findByUsername(((UserDetails) principal).getUsername()).orElseThrow(
-                () -> new EntityNotExistedException(ErrorCodeMessage.USER_NOT_FOUND)
+                () -> new EntityNotExistedException(ErrorCodeMessage.USER_NOT_EXISTED)
         );
 
         return findUser.getId();
@@ -41,7 +41,7 @@ public class AuthUtil {
         UserDetails userDetails = (UserDetails) principal;
 
         User findUser = userRepository.findByUsername(userDetails.getUsername()).orElseThrow(
-                () -> new EntityNotExistedException(ErrorCodeMessage.USER_NOT_FOUND)
+                () -> new EntityNotExistedException(ErrorCodeMessage.USER_NOT_EXISTED)
         );
 
         return findUser.getNickname();
@@ -53,7 +53,7 @@ public class AuthUtil {
         UserDetails userDetails = (UserDetails) principal;
 
         User user = userRepository.findByUsername(userDetails.getUsername()).orElseThrow(
-                () -> new EntityNotExistedException(ErrorCodeMessage.USER_NOT_FOUND)
+                () -> new EntityNotExistedException(ErrorCodeMessage.USER_NOT_EXISTED)
         );
 
         return user;
