@@ -6,6 +6,6 @@ import com.example.backend.global.error.exception.CustomException;
 public class NicknameAlreadyExistedException extends CustomException {
 
     public NicknameAlreadyExistedException() {
-        super(ErrorCodeMessage.NICKNAME_EXIST);
+        super(ErrorCodeMessage.NICKNAME_EXISTED);
     }
 }

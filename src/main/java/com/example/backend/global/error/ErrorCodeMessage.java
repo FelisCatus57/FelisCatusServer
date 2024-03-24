@@ -13,14 +13,17 @@ public enum ErrorCodeMessage {
 
     // User
     USER_NOT_EXISTED(400,  "존재 하지 않는 유저입니다."),
-    USERNAME_EXIST(400,  "이미 존재하는 아이디 입니다."),
-    NICKNAME_EXIST(400,  "이미 존재하는 닉네임 입니다."),
-    AUTHENTICATION_FAIL(401,  "로그인이 필요한 화면입니다."),
+    USERNAME_EXISTED(400,  "이미 존재하는 아이디 입니다."),
+    NICKNAME_EXISTED(400,  "이미 존재하는 닉네임 입니다."),
+    AUTHENTICATION_FAIL(401,  "로그인이 필요한 회원입니다."),
     ACCOUNT_MISMATCH(401,  "회원 정보가 일치하지 않습니다."),
     AUTHORITY_INVALID(403,  "권한이 없습니다."),
 
     // Post
     POST_NOT_FOUND(400, "존재하지 않는 포스트 입니다."),
+
+    // Comment
+    COMMENT_NOT_FOUND(400, "존재 하지 않는 댓글입니다."),
 
     // TODO Status 변환하기
     JWT_REFRESHTOKEN_EXPIRED(401, "만료된 리프레시 토큰입니다."),

@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: mysql, jwt, oauth2, minio
+    active: mysql, jwt, oauth2, minio, swagger
 
   servlet:
     multipart:

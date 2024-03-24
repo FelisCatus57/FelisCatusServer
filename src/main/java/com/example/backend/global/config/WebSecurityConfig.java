@@ -55,6 +55,10 @@ public class WebSecurityConfig {
         return new ProviderManager(provider);
     }
 
+    public static final String[] SwaggerString = {
+            "/swagger-resources/**", "/swagger-ui/**", "/v3/api-docs/**", "/v3/api-docs",
+    };
+
     @Bean
     public LoginSuccessHandler loginSuccessHandler() {
         return new LoginSuccessHandler(jwtService, userRepository);
@@ -123,7 +127,8 @@ public class WebSecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         http
                 .authorizeHttpRequests( (auth) -> auth
-                        .requestMatchers("/", "/sign-up", "/test1" , "/postup2").permitAll()
+                        .requestMatchers("/", "/signup", "/test1" , "/postup2").permitAll()
+                        .requestMatchers(SwaggerString).permitAll()
                         .anyRequest().authenticated());
 
         http

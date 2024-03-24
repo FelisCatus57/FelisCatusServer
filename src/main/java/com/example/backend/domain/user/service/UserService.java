@@ -30,7 +30,7 @@ public class UserService {
             throw new UsernameAlreadyExistedException();
         }
 
-        if (userRepository.existsUsersByNickname(userRegisterRequest.getNickname())) {
+        if (userRepository.existsUserByNickname(userRegisterRequest.getNickname())) {
             throw new NicknameAlreadyExistedException();
         }
 
@@ -39,6 +39,7 @@ public class UserService {
                 .password(userRegisterRequest.getPassword())
                 .nickname(userRegisterRequest.getNickname())
                 .name(userRegisterRequest.getName())
+                .email(userRegisterRequest.getEmail())
                 .role(Role.USER)
                 .gender(Gender.PRIVATE)
                 .image(Image.builder()

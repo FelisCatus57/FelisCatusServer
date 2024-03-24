@@ -1,6 +1,7 @@
 package com.example.backend.global.authorization.login.handler;
 
 import com.example.backend.domain.user.entity.User;
+import com.example.backend.domain.user.exception.UserNotExistedException;
 import com.example.backend.domain.user.repository.UserRepository;
 import com.example.backend.global.authorization.jwt.service.JwtService;
 import com.example.backend.global.result.ResultResponseDTO;
@@ -59,7 +60,7 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
     // 파싱한 Username 을 가지고 유저 객체에서 Nickname 을 파싱한다.
     private String extractNickname(String username) {
-        User nickUser = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("해당 유저가 존재하지 않습니다."));
+        User nickUser = userRepository.findByUsername(username).orElseThrow(() -> new UserNotExistedException());
         return nickUser.getNickname();
     }
 

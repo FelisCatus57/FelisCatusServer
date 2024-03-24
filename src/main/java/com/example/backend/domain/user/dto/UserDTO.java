@@ -17,6 +17,8 @@ public class UserDTO {
 
     private String nickname;
 
+    private String email;
+
     private Image image;
 
     public UserDTO(User user) {
@@ -24,6 +26,7 @@ public class UserDTO {
         this.username = user.getUsername();
         this.name = user.getName();
         this.nickname = user.getNickname();
+        this.email = user.getEmail();
         this.image = user.getImage();
     }
 }

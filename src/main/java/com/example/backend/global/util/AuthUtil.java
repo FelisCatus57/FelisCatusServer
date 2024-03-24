@@ -1,14 +1,13 @@
 package com.example.backend.global.util;
 
 import com.example.backend.domain.user.entity.User;
+import com.example.backend.domain.user.exception.UserNotExistedException;
 import com.example.backend.domain.user.repository.UserRepository;
 import com.example.backend.global.error.ErrorCodeMessage;
 import com.example.backend.global.error.exception.EntityNotExistedException;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.metamodel.internal.MemberResolver;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -53,8 +52,7 @@ public class AuthUtil {
         UserDetails userDetails = (UserDetails) principal;
 
         User user = userRepository.findByUsername(userDetails.getUsername()).orElseThrow(
-                () -> new EntityNotExistedException(ErrorCodeMessage.USER_NOT_EXISTED)
-        );
+                () -> new UserNotExistedException());
 
         return user;
     }

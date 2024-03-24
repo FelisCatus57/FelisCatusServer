@@ -4,6 +4,7 @@ import com.example.backend.domain.feed.dto.CommentDTO;
 import com.example.backend.domain.feed.dto.CommentUploadRequest;
 import com.example.backend.domain.feed.entity.Comment;
 import com.example.backend.domain.feed.entity.Post;
+import com.example.backend.domain.feed.exception.PostNotExistedException;
 import com.example.backend.domain.feed.repository.CommentRepository;
 import com.example.backend.domain.feed.repository.PostRepository;
 import com.example.backend.domain.user.entity.User;
@@ -29,17 +30,17 @@ public class CommentService {
 
     public void commentUpload(CommentUploadRequest commentUploadRequest) {
 
-        Post findPost = getPost(commentUploadRequest.getPostId());
         // 현재 댓글을 적을 포스트를 가져온다.
+        Post findPost = getPost(commentUploadRequest.getPostId());
 
-        User loginUser = authUtil.getLoginUser();
         // 현재 로그인한 사용자를 가져온다.
+        User loginUser = authUtil.getLoginUser();
 
-        Optional<Comment> parentComment = commentRepository.findCommentById(commentUploadRequest.getParentId());
         // 부모 댓글을 가져온다.
+        Optional<Comment> parentComment = commentRepository.findCommentById(commentUploadRequest.getParentId());
 
-        boolean isParentComment = parentComment.isEmpty();
         // 부모 댓글이 없으면 자신이 부모 댓글이다.
+        boolean isParentComment = parentComment.isEmpty();
 
         if (isParentComment) { // 자신이 부모 댓글 이라면
             Comment saved = commentRepository.save(new Comment(loginUser, findPost, commentUploadRequest.getContent()));
@@ -52,7 +53,7 @@ public class CommentService {
     private Post getPost(Long postId) {
 
         Post findPost = postRepository.findPostById(postId).orElseThrow(
-                () -> new EntityNotExistedException(ErrorCodeMessage.POST_NOT_FOUND)
+                () -> new PostNotExistedException()
         );
 
         return findPost;

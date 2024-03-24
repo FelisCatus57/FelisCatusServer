@@ -1,6 +1,7 @@
 package com.example.backend.global.authorization.login.service;
 
 import com.example.backend.domain.user.entity.User;
+import com.example.backend.domain.user.exception.UserNotExistedException;
 import com.example.backend.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,7 +18,7 @@ public class CustomLoginService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username) // 해당 아이디를 가진 유저를 찾아낸다.
-                .orElseThrow(() -> new UsernameNotFoundException("해당 아이디가 존재하지 않습니다."));
+                .orElseThrow(() -> new UserNotExistedException());
 
         return org.springframework.security.core.userdetails.User.builder()
                 .username(user.getUsername())
