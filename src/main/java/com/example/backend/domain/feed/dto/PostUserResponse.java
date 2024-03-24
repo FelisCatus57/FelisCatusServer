@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 public class PostUserResponse {
 
     @Schema(description = "유저 번호")
-    private Long id;
+    private Long userId;
 
     @Schema(description = "유저 아이디")
     private String username;
@@ -27,7 +27,7 @@ public class PostUserResponse {
     private Image image;
 
     public PostUserResponse(User user) {
-        this.id = user.getId();
+        this.userId = user.getId();
         this.username = user.getUsername();
         this.nickname = user.getNickname();
         this.image = user.getImage();

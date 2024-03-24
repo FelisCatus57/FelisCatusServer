@@ -11,6 +11,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -19,26 +21,26 @@ import java.time.LocalDateTime;
 public class PostResponse {
 
     @Schema(description = "게시물 번호")
-    private Long id;
+    private Long postId;
 
     @Schema(description = "유저 정보")
-    private  PostUserResponse postUserResponse;
+    private PostUserResponse postUserResponse;
 
     @Schema(description = "게시물 내용")
     private String content;
 
     @Schema(description = "게시물 이미지")
-    private PostImageResponse postImageResponse;
+    private List<PostImageResponse> postImageResponse; // 한개가 아니라 여러개
 
     @Schema(description = "게시물 생성 날짜")
-    private LocalDateTime createAt;
+    private String createdDate;
 
     public PostResponse(Post post) {
-        this.id = post.getId();
+        this.postId = post.getId();
         this.content = post.getContent();
         this.postUserResponse = new PostUserResponse(post.getUser());
-        this.postImageResponse = new PostImageResponse(post.getImages());
-        this.createAt = post.getCreatedDate();
+        this.postImageResponse = new PostImageResponse().PostImageResponse(post.getImages());
+        this.createdDate = post.getCreatedDate();
 
     }
 }
