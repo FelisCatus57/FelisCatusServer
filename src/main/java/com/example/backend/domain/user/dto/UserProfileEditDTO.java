@@ -18,7 +18,7 @@ public class UserProfileEditDTO {
     @Schema(description = "유저 이름")
     private String name;
 
-    @Schema(description = "우저 닉네임")
+    @Schema(description = "유저 닉네임")
     private String nickname;
 
 //    private String

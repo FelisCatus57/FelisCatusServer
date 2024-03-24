@@ -2,7 +2,9 @@ package com.example.backend.domain.user.dto;
 
 import com.example.backend.global.image.Image;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
 
+@Data
 @Schema(description = "회원 조회 응답 DTO")
 public class UserProfileResponse {
 

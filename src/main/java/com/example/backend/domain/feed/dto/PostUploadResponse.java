@@ -1,13 +1,16 @@
 package com.example.backend.domain.feed.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Schema(description = "게시물 응답 DTO")
 public class PostUploadResponse {
 
+    @Schema(description = "게시물 번호")
     private Long postId;
 
 }
