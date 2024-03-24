@@ -4,6 +4,7 @@ package com.example.backend.common.minio;
 import com.example.backend.domain.feed.exception.FileAlreadyExistedException;
 import com.example.backend.domain.feed.exception.FileConvertException;
 import com.example.backend.global.image.Image;
+import com.example.backend.global.image.ImageType;
 import com.example.backend.global.util.ImageUtil;
 import io.minio.MinioClient;
 
@@ -34,6 +35,7 @@ public class MinioUploader {
 
     // 
     public Image to(MultipartFile multipartFile, String dir) {
+
         Image image = ImageUtil.to(multipartFile); // MultipartFile 을 Image 객체로 변환
         String filename = convertToFilename(dir, image); // 경로와 이미지 객체의 정보를 가지고 파일 이름 생성
         String url = upload(multipartFile, filename); // 경로 반환후 설정
@@ -68,10 +70,11 @@ public class MinioUploader {
                         .bucket(bucket)
                         .object(filename)
                         .stream(inputStream, file.length(), putSize)
+                        .contentType("image/" + filename.substring(filename.length() - 3))
                         .build()
         );
 
-        String fileUrl = "http://uncertain.shop:9000/" + bucket + "/" + filename;
+        String fileUrl = "http://uncertain.shop:9000"+ "/" + bucket + "/" + filename;
 //        System.out.println(fileUrl);
 
         return fileUrl;
