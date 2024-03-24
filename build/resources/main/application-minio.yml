@@ -1,6 +1,0 @@
-minio:
-  url: http://uncertain.shop:9000
-  bucket: sample
-  accessKey: minio
-  secretKey: miniopass
-  put-object-part-size: 5242880 # value in bytes (minimum is 5 MB equivalent)
