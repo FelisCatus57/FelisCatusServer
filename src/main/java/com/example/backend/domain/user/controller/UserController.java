@@ -1,5 +1,6 @@
 package com.example.backend.domain.user.controller;
 
+import com.example.backend.domain.user.dto.UserProfileResponse;
 import com.example.backend.domain.user.dto.UserRegisterRequest;
 import com.example.backend.domain.user.entity.User;
 import com.example.backend.domain.user.repository.UserRepository;
