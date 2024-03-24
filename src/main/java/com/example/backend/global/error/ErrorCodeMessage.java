@@ -22,6 +22,7 @@ public enum ErrorCodeMessage {
 
     // Post
     POST_NOT_FOUND(400, "존재하지 않는 포스트 입니다."),
+    GET_USER_POST_FAIL(400, "유저 게시물 조회에 실패 하였습니다."),
 
     // Comment
     COMMENT_NOT_FOUND(400, "존재 하지 않는 댓글입니다."),
