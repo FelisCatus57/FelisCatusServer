@@ -16,7 +16,7 @@ public class AuthUtil {
 
     private final UserRepository userRepository;
 
-    public Long getLoginUserIdOrNull() {
+    public Long getLoginUserId() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails) principal;
 
