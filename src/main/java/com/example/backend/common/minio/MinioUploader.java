@@ -1,15 +1,14 @@
 package com.example.backend.common.minio;
 
 
-import com.example.backend.global.error.exception.FileConvertException;
+import com.example.backend.domain.feed.exception.FileAlreadyExistedException;
+import com.example.backend.domain.feed.exception.FileConvertException;
 import com.example.backend.global.image.Image;
 import com.example.backend.global.util.ImageUtil;
-import io.minio.GetPresignedObjectUrlArgs;
 import io.minio.MinioClient;
 
 import io.minio.PutObjectArgs;
 import io.minio.RemoveObjectArgs;
-import io.minio.http.Method;
 import lombok.RequiredArgsConstructor;
 
 import lombok.SneakyThrows;
@@ -123,6 +122,7 @@ public class MinioUploader {
     // TODO EXCEPTION 교체
     private File convertMultiToLocal(MultipartFile file) {
         try {
+
             String path = System.getProperty("user.dir") + File.separator + "upload" + File.separator + file.getOriginalFilename();
 
             File convertFile = new File(path);
@@ -135,7 +135,7 @@ public class MinioUploader {
                 log.info("complete write to local file");
                 return convertFile;
             }
-            throw new FileConvertException(); // Custom Exception
+            throw new FileAlreadyExistedException(); // Custom Exception
         } catch (IOException e) {
             throw new FileConvertException(); // Custom Exception
         }
