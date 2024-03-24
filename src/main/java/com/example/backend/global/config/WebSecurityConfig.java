@@ -127,7 +127,7 @@ public class WebSecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         http
                 .authorizeHttpRequests( (auth) -> auth
-                        .requestMatchers("/", "/signup", "/test1" , "/postup2").permitAll()
+                        .requestMatchers("/","/api/**", "/signup").permitAll()
                         .requestMatchers(SwaggerString).permitAll()
                         .anyRequest().authenticated());
 
