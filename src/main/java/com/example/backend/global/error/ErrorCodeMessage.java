@@ -10,6 +10,7 @@ public enum ErrorCodeMessage {
     UNKNOWN(500, "알 수 없는 오류가 발생하였습니다."),
     INTERNAL_SERVER_ERROR(500,  "내부 서버 오류입니다."),
     FILE_CONVERT_FAIL(500, "변환할 수 없는 파일입니다."),
+    FILE_ALREADY_EXISTED(400, "이미 폴더에 존재하는 사진입니다."),
 
     // User
     USER_NOT_EXISTED(400,  "존재 하지 않는 유저입니다."),
