@@ -18,6 +18,6 @@ public class PostUploadRequest {
     @Schema(description = "게시물 내용")
     private String content;
 
-    @Schema(description = "게시물 이미지 (여러장 가능)")
+    @Schema(description = "게시물 이미지 (여러장 가능) [form-data 형식 / 내용 content , 파일 files]")
     private List<MultipartFile> files = new ArrayList<>();
 }
