@@ -1,6 +1,7 @@
 package com.example.backend.domain.feed.service;
 
 import com.example.backend.domain.feed.dto.CommentUploadRequest;
+import com.example.backend.domain.feed.dto.CommentUploadResponse;
 import com.example.backend.domain.feed.entity.Comment;
 import com.example.backend.domain.feed.entity.Post;
 import com.example.backend.domain.feed.exception.PostNotExistedException;
@@ -23,26 +24,27 @@ public class CommentService {
     private final PostRepository postRepository;
     private final CommentRepository commentRepository;
 
-    public void commentUpload(CommentUploadRequest commentUploadRequest) {
+    public CommentUploadResponse commentUpload(CommentUploadRequest commentUploadRequest, Long postId) {
 
         // 현재 댓글을 적을 포스트를 가져온다.
-        Post findPost = getPost(commentUploadRequest.getPostId());
+        Post findPost = getPost(postId);
 
         // 현재 로그인한 사용자를 가져온다.
         User loginUser = authUtil.getLoginUser();
 
-        // 부모 댓글을 가져온다.
-        Optional<Comment> parentComment = commentRepository.findCommentById(commentUploadRequest.getParentId());
-
-        // 부모 댓글이 없으면 자신이 부모 댓글이다.
-        boolean isParentComment = parentComment.isEmpty();
-
-        if (isParentComment) { // 자신이 부모 댓글 이라면
+        if (commentUploadRequest.getParentId() == null) {
             Comment saved = commentRepository.save(new Comment(loginUser, findPost, commentUploadRequest.getContent()));
-        } else { // 자식 댓글 이라면
-            Comment saved = commentRepository.save(new Comment(parentComment.get(), loginUser, findPost, commentUploadRequest.getContent()));
-        }
 
+            return new CommentUploadResponse(saved);
+        } else {
+
+            Optional<Comment> parentComment = commentRepository.findCommentById(commentUploadRequest.getParentId());
+
+            Comment saved = commentRepository.save(new Comment(parentComment.get(), loginUser, findPost, commentUploadRequest.getContent()));
+
+            return new CommentUploadResponse(saved);
+
+        }
     }
 
     private Post getPost(Long postId) {
