@@ -16,6 +16,7 @@ public class AuthUtil {
 
     private final UserRepository userRepository;
 
+    // 로그인한 사용자의 유저 번호를 가져옴
     public Long getLoginUserId() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails) principal;
@@ -28,14 +29,16 @@ public class AuthUtil {
 
     }
 
-    public String getLoginUserUsernameOrNull() {
+    // 로그인한 사용자의 아이디를 가져옴
+    public String getLoginUserUsername() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails) principal;
 
         return userDetails.getUsername();
     }
 
-    public String getLoginUserNicknameOrNull() {
+    // 로그인한 사용자의 닉네임을 가져옴
+    public String getLoginUserNickname() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails) principal;
 
@@ -46,6 +49,7 @@ public class AuthUtil {
         return findUser.getNickname();
     }
 
+    // 로그인한 사용자의 객체를 가져옴
     public User getLoginUser() {
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
