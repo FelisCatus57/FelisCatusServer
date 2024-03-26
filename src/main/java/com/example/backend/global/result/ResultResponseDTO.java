@@ -1,6 +1,8 @@
 package com.example.backend.global.result;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 
 @Data
 @Builder

@@ -1,6 +1,5 @@
 package com.example.backend.domain.feed.service;
 
-import com.example.backend.domain.feed.dto.CommentDTO;
 import com.example.backend.domain.feed.dto.CommentUploadRequest;
 import com.example.backend.domain.feed.entity.Comment;
 import com.example.backend.domain.feed.entity.Post;
@@ -9,14 +8,10 @@ import com.example.backend.domain.feed.repository.CommentRepository;
 import com.example.backend.domain.feed.repository.PostRepository;
 import com.example.backend.domain.user.entity.User;
 import com.example.backend.domain.user.repository.UserRepository;
-import com.example.backend.global.error.ErrorCodeMessage;
-import com.example.backend.global.error.exception.EntityNotExistedException;
 import com.example.backend.global.util.AuthUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Parameter;
-import java.util.List;
 import java.util.Optional;
 
 @Service

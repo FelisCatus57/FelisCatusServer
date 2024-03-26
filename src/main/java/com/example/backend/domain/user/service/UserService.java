@@ -7,8 +7,6 @@ import com.example.backend.domain.user.entity.User;
 import com.example.backend.domain.user.exception.NicknameAlreadyExistedException;
 import com.example.backend.domain.user.exception.UsernameAlreadyExistedException;
 import com.example.backend.domain.user.repository.UserRepository;
-import com.example.backend.global.error.ErrorCodeMessage;
-import com.example.backend.global.error.exception.EntityNotExistedException;
 import com.example.backend.global.image.Image;
 import com.example.backend.global.image.ImageType;
 import jakarta.transaction.Transactional;

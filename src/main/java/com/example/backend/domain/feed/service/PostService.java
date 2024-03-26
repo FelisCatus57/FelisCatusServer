@@ -1,6 +1,5 @@
 package com.example.backend.domain.feed.service;
 
-import com.example.backend.domain.feed.dto.PostImageResponse;
 import com.example.backend.domain.feed.dto.PostResponse;
 import com.example.backend.domain.feed.dto.PostUploadRequest;
 import com.example.backend.domain.feed.dto.PostUploadResponse;
@@ -8,7 +7,6 @@ import com.example.backend.domain.feed.entity.Post;
 import com.example.backend.domain.feed.exception.PostNotExistedException;
 import com.example.backend.domain.feed.repository.PostRepository;
 import com.example.backend.domain.user.entity.User;
-import com.example.backend.domain.user.exception.UserNotExistedException;
 import com.example.backend.global.util.AuthUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

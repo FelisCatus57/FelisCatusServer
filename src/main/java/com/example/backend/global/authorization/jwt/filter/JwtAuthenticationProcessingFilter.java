@@ -2,8 +2,8 @@ package com.example.backend.global.authorization.jwt.filter;
 
 import com.example.backend.domain.user.entity.User;
 import com.example.backend.domain.user.repository.UserRepository;
-import com.example.backend.global.util.RandomPasswordUtil;
 import com.example.backend.global.authorization.jwt.service.JwtService;
+import com.example.backend.global.util.RandomPasswordUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

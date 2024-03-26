@@ -4,14 +4,11 @@ package com.example.backend.common.minio;
 import com.example.backend.domain.feed.exception.FileAlreadyExistedException;
 import com.example.backend.domain.feed.exception.FileConvertException;
 import com.example.backend.global.image.Image;
-import com.example.backend.global.image.ImageType;
 import com.example.backend.global.util.ImageUtil;
 import io.minio.MinioClient;
-
 import io.minio.PutObjectArgs;
 import io.minio.RemoveObjectArgs;
 import lombok.RequiredArgsConstructor;
-
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;

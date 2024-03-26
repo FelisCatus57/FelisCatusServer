@@ -1,17 +1,12 @@
 package com.example.backend.domain.feed.dto;
 
 import com.example.backend.domain.feed.entity.Post;
-import com.example.backend.domain.feed.entity.PostImage;
-import com.example.backend.domain.user.dto.UserDTO;
-import com.example.backend.global.image.Image;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.List;
 
 @Data
