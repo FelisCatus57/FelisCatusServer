@@ -1,6 +1,7 @@
 package com.example.backend.global.util;
 
 import com.example.backend.domain.user.entity.User;
+import com.example.backend.domain.user.exception.LoginRequiredException;
 import com.example.backend.domain.user.exception.UserNotExistedException;
 import com.example.backend.domain.user.repository.UserRepository;
 import com.example.backend.global.error.ErrorCodeMessage;
@@ -18,47 +19,64 @@ public class AuthUtil {
 
     // 로그인한 사용자의 유저 번호를 가져옴
     public Long getLoginUserId() {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        UserDetails userDetails = (UserDetails) principal;
 
-        User findUser = userRepository.findByUsername(((UserDetails) principal).getUsername()).orElseThrow(
-                () -> new EntityNotExistedException(ErrorCodeMessage.USER_NOT_EXISTED)
-        );
+        try {
+            Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            UserDetails userDetails = (UserDetails) principal;
 
-        return findUser.getId();
+            User findUser = userRepository.findByUsername(((UserDetails) principal).getUsername()).orElseThrow(
+                    () -> new EntityNotExistedException(ErrorCodeMessage.USER_NOT_EXISTED)
+            );
 
+            return findUser.getId();
+        } catch (LoginRequiredException e) {
+            return -1L;
+        }
     }
 
     // 로그인한 사용자의 아이디를 가져옴
     public String getLoginUserUsername() {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        UserDetails userDetails = (UserDetails) principal;
 
-        return userDetails.getUsername();
+        try {
+            Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            UserDetails userDetails = (UserDetails) principal;
+
+            return userDetails.getUsername();
+        } catch (LoginRequiredException e) {
+            return null;
+        }
     }
 
     // 로그인한 사용자의 닉네임을 가져옴
     public String getLoginUserNickname() {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        UserDetails userDetails = (UserDetails) principal;
+        try {
+            Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            UserDetails userDetails = (UserDetails) principal;
 
-        User findUser = userRepository.findByUsername(userDetails.getUsername()).orElseThrow(
-                () -> new EntityNotExistedException(ErrorCodeMessage.USER_NOT_EXISTED)
-        );
+            User findUser = userRepository.findByUsername(userDetails.getUsername()).orElseThrow(
+                    () -> new EntityNotExistedException(ErrorCodeMessage.USER_NOT_EXISTED)
+            );
 
-        return findUser.getNickname();
+            return findUser.getNickname();
+
+        } catch (LoginRequiredException e) {
+            return null;
+        }
     }
 
     // 로그인한 사용자의 객체를 가져옴
     public User getLoginUser() {
+        try {
+            Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            UserDetails userDetails = (UserDetails) principal;
 
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        UserDetails userDetails = (UserDetails) principal;
+            User user = userRepository.findByUsername(userDetails.getUsername()).orElseThrow(
+                    () -> new UserNotExistedException());
 
-        User user = userRepository.findByUsername(userDetails.getUsername()).orElseThrow(
-                () -> new UserNotExistedException());
-
-        return user;
+            return user;
+        } catch (LoginRequiredException e) {
+            return null;
+        }
     }
 
 }
