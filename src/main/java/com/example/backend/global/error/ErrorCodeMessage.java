@@ -26,11 +26,15 @@ public enum ErrorCodeMessage {
 
     // Comment
     COMMENT_NOT_FOUND(400, "존재 하지 않는 댓글입니다."),
+    GET_POST_COMMNET_FAIL(400, "게시글 댓글 조회에 실패 하였습니다."),
 
     // TODO Status 변환하기
     JWT_REFRESHTOKEN_EXPIRED(401, "만료된 리프레시 토큰입니다."),
     JWT_TOKEN_INVALID( 401, "유효하지 않은 토큰입니다."),
-    JWT_TOKEN_EXPIRED( 401, "만료된 토큰입니다.");
+    JWT_TOKEN_EXPIRED( 401, "만료된 토큰입니다."),
+
+    // Oauth2
+    OAUTH2_INVALID_REQUEST(400, "정상적인 요청이 아닙니다.");
 
 
 
