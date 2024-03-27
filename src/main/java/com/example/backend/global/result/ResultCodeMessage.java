@@ -14,8 +14,9 @@ public enum ResultCodeMessage {
 
     POST_SUCCESS(200, "게시물 작성에 성공하였습니다."),
     POST_DELETE_SUCCESS(200, "게시물 삭제에 성공하였습니다."),
+    GET_USER_POST_SUCCESS(200, "유저 게시물 조회에 성공하였습니다."),
 
-    COMMENT_SUCCES(200, "댓글 작성에 성공하였습니다.");
+    COMMENT_SUCCESS(200, "댓글 작성에 성공하였습니다.");
 
 
 

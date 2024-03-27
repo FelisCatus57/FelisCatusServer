@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: mysql, jwt, oauth2, minio
+    active: mysql, jwt, oauth2, minio, swagger
 
   servlet:
     multipart:
@@ -12,7 +12,7 @@ spring:
     database-platform: org.hibernate.dialect.MySQLDialect
     show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     properties:
       hibernate:
         format_sql: true

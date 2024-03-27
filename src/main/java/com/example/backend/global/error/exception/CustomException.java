@@ -3,9 +3,6 @@ package com.example.backend.global.error.exception;
 import com.example.backend.global.error.ErrorCodeMessage;
 import com.example.backend.global.error.ErrorResponseDTO;
 import lombok.Getter;
-import okhttp3.internal.http2.ErrorCode;
-import org.checkerframework.checker.units.qual.A;
-import org.springframework.http.HttpStatus;
 
 import java.util.ArrayList;
 import java.util.List;

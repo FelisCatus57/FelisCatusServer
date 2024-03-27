@@ -13,8 +13,6 @@ import com.example.backend.global.authorization.oauth2.service.CustomOAuth2UserS
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.filters.CorsFilter;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -28,11 +26,8 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
 
 import java.util.Arrays;
-import java.util.Collections;
 
 @Configuration
 @EnableWebSecurity
@@ -54,6 +49,10 @@ public class WebSecurityConfig {
         provider.setUserDetailsService(customLoginService);
         return new ProviderManager(provider);
     }
+
+    public static final String[] SwaggerString = {
+            "/swagger-resources/**", "/swagger-ui/**", "/v3/api-docs/**", "/v3/api-docs",
+    };
 
     @Bean
     public LoginSuccessHandler loginSuccessHandler() {
@@ -123,7 +122,8 @@ public class WebSecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         http
                 .authorizeHttpRequests( (auth) -> auth
-                        .requestMatchers("/", "/sign-up", "/test1" , "/postup2").permitAll()
+                        .requestMatchers("/","/api/**", "/signup").permitAll()
+                        .requestMatchers(SwaggerString).permitAll()
                         .anyRequest().authenticated());
 
         http
