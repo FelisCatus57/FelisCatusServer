@@ -4,6 +4,7 @@ import com.example.backend.domain.feed.dto.CommentUploadRequest;
 import com.example.backend.domain.feed.dto.CommentUploadResponse;
 import com.example.backend.domain.feed.entity.Comment;
 import com.example.backend.domain.feed.entity.Post;
+import com.example.backend.domain.feed.exception.CommentNotExistedException;
 import com.example.backend.domain.feed.exception.PostNotExistedException;
 import com.example.backend.domain.feed.repository.CommentRepository;
 import com.example.backend.domain.feed.repository.PostRepository;
@@ -12,8 +13,6 @@ import com.example.backend.domain.user.repository.UserRepository;
 import com.example.backend.global.util.AuthUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -32,19 +31,33 @@ public class CommentService {
         // 현재 로그인한 사용자를 가져온다.
         User loginUser = authUtil.getLoginUser();
 
-        if (commentUploadRequest.getParentId() == null) {
-            Comment saved = commentRepository.save(new Comment(loginUser, findPost, commentUploadRequest.getContent()));
+        Comment saved = commentRepository.save(new Comment(loginUser, findPost, commentUploadRequest.getContent()));
 
-            return new CommentUploadResponse(saved);
-        } else {
+        return new CommentUploadResponse(saved);
+    }
 
-            Optional<Comment> parentComment = commentRepository.findCommentById(commentUploadRequest.getParentId());
+    public CommentUploadResponse childrenCommentUpload(CommentUploadRequest commentUploadRequest, Long postId, Long commentId) {
 
-            Comment saved = commentRepository.save(new Comment(parentComment.get(), loginUser, findPost, commentUploadRequest.getContent()));
+        // 현재 댓글을 적을 포스트를 가져온다.
+        Post findPost = getPost(postId);
 
-            return new CommentUploadResponse(saved);
+        // 현재 로그인한 사용자를 가져온다.
+        User loginUser = authUtil.getLoginUser();
 
-        }
+        // 부모 댓글을 가져온다.
+        Comment parentComment = getParentComment(commentId);
+
+        Comment saved = commentRepository.save(new Comment(parentComment, loginUser, findPost, commentUploadRequest.getContent()));
+
+        return new CommentUploadResponse(saved);
+    }
+
+    private Comment getParentComment(Long commentId) {
+
+        Comment findComment = commentRepository.findCommentById(commentId).orElseThrow(
+                () -> new CommentNotExistedException());
+
+        return findComment;
     }
 
     private Post getPost(Long postId) {
