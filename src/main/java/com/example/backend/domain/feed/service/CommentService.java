@@ -5,6 +5,7 @@ import com.example.backend.domain.feed.dto.CommentUploadResponse;
 import com.example.backend.domain.feed.entity.Comment;
 import com.example.backend.domain.feed.entity.Post;
 import com.example.backend.domain.feed.exception.CommentNotExistedException;
+import com.example.backend.domain.feed.exception.PostCanNotDeleteException;
 import com.example.backend.domain.feed.exception.PostNotExistedException;
 import com.example.backend.domain.feed.repository.CommentRepository;
 import com.example.backend.domain.feed.repository.PostRepository;
@@ -13,6 +14,7 @@ import com.example.backend.domain.user.repository.UserRepository;
 import com.example.backend.global.util.AuthUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -23,6 +25,7 @@ public class CommentService {
     private final PostRepository postRepository;
     private final CommentRepository commentRepository;
 
+    @Transactional
     public CommentUploadResponse commentUpload(CommentUploadRequest commentUploadRequest, Long postId) {
 
         // 현재 댓글을 적을 포스트를 가져온다.
@@ -36,6 +39,7 @@ public class CommentService {
         return new CommentUploadResponse(saved);
     }
 
+    @Transactional
     public CommentUploadResponse childrenCommentUpload(CommentUploadRequest commentUploadRequest, Long postId, Long commentId) {
 
         // 현재 댓글을 적을 포스트를 가져온다.
@@ -50,6 +54,30 @@ public class CommentService {
         Comment saved = commentRepository.save(new Comment(parentComment, loginUser, findPost, commentUploadRequest.getContent()));
 
         return new CommentUploadResponse(saved);
+    }
+
+    @Transactional
+    public void deleteComment(Long commentId) {
+
+        // 로그인한 유저를 가져온다.
+        User loginUser = authUtil.getLoginUser();
+
+        // 해당 된 게시물을 가져온다.
+        Comment findComment = getComment(commentId);
+
+        if (!findComment.getUser().getId().equals(loginUser.getId()))
+            throw new PostCanNotDeleteException();
+
+        // 자식 댓글이라면
+        commentRepository.delete(findComment);
+    }
+
+    private Comment getComment(Long commentId) {
+
+        Comment findComment = commentRepository.findCommentById(commentId).orElseThrow(
+                () -> new CommentNotExistedException());
+
+        return findComment;
     }
 
     private Comment getParentComment(Long commentId) {
