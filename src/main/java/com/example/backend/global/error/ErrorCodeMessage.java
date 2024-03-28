@@ -23,10 +23,12 @@ public enum ErrorCodeMessage {
     // Post
     POST_NOT_FOUND(400, "존재하지 않는 포스트 입니다."),
     GET_USER_POST_FAIL(400, "유저 게시물 조회에 실패 하였습니다."),
+    POST_USER_DELETE_FAIL(400, "작성자만 삭제 가능한 게시물입니다."),
 
     // Comment
     COMMENT_NOT_FOUND(400, "존재 하지 않는 댓글입니다."),
-    GET_POST_COMMNET_FAIL(400, "게시글 댓글 조회에 실패 하였습니다."),
+    GET_POST_COMMENT_FAIL(400, "게시글 댓글 조회에 실패 하였습니다."),
+    COMMENT_USER_DELETE_FAIL(400, "작성자만 삭제 가능한 댓글입니다."),
 
     // TODO Status 변환하기
     JWT_REFRESHTOKEN_EXPIRED(401, "만료된 리프레시 토큰입니다."),
