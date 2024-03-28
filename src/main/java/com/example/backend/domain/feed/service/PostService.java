@@ -4,6 +4,7 @@ import com.example.backend.domain.feed.dto.PostResponse;
 import com.example.backend.domain.feed.dto.PostUploadRequest;
 import com.example.backend.domain.feed.dto.PostUploadResponse;
 import com.example.backend.domain.feed.entity.Post;
+import com.example.backend.domain.feed.exception.PostCanNotDeleteException;
 import com.example.backend.domain.feed.exception.PostNotExistedException;
 import com.example.backend.domain.feed.repository.PostRepository;
 import com.example.backend.domain.user.entity.User;
@@ -32,7 +33,7 @@ public class PostService {
         User loginUser = authUtil.getLoginUser();
 
         Post post = new Post(loginUser, postUploadRequest.getContent());
-
+ 
         Post save = postRepository.save(post);
 
         postImageService.saveAll(save, postUploadRequest.getFiles());
@@ -40,6 +41,33 @@ public class PostService {
         return new PostUploadResponse(save.getId());
 
     }
+
+    @Transactional
+    public void deletePost(Long postId) {
+
+        // 로그인한 유저를 가져온다.
+        User loginUser = authUtil.getLoginUser();
+
+        // 해당 된 게시물을 가져온다.
+        Post findPost = getPost(postId);
+
+        if (!findPost.getUser().getId().equals(loginUser.getId()))
+            throw new PostCanNotDeleteException();
+
+        postImageService.deleteAll(findPost);
+
+        postRepository.delete(findPost);
+
+    }
+
+    private Post getPost(Long postId) {
+        Post getPost = postRepository.findPostById(postId).orElseThrow(
+                () -> new PostNotExistedException());
+
+        return getPost;
+
+    }
+
 
     // 특정 유저의 멤버 번호를 통해 해당 유저의 모든 게시물 조회
     public List<PostResponse> getUserAllPost(Long userId) {
