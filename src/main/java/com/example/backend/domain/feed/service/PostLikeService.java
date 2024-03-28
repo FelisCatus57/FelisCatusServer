@@ -2,7 +2,6 @@ package com.example.backend.domain.feed.service;
 
 import com.example.backend.domain.feed.entity.Post;
 import com.example.backend.domain.feed.entity.PostLike;
-import com.example.backend.domain.feed.exception.PostLikeAlreadyExistedException;
 import com.example.backend.domain.feed.exception.PostNotExistedException;
 import com.example.backend.domain.feed.repository.PostLikeRepository;
 import com.example.backend.domain.feed.repository.PostRepository;
@@ -29,10 +28,6 @@ public class PostLikeService {
                 () -> new PostNotExistedException());
 
         PostLike like = new PostLike(findUser, findPost);
-
-        if (postLikeRepository.existsByUserIdAndPostId(findUser.getId(), findPost.getId())) {
-            new PostLikeAlreadyExistedException();
-        }
 
         postLikeRepository.save(like);
     }
