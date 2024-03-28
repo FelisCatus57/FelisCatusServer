@@ -1,7 +1,6 @@
 package com.example.backend.global.error;
 
 import com.example.backend.global.error.exception.CustomException;
-import okhttp3.internal.http2.ErrorCode;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

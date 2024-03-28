@@ -1,21 +1,19 @@
 package com.example.backend.domain.feed.service;
 
-import com.example.backend.domain.feed.dto.PostDTO;
+import com.example.backend.domain.feed.dto.PostResponse;
 import com.example.backend.domain.feed.dto.PostUploadRequest;
 import com.example.backend.domain.feed.dto.PostUploadResponse;
 import com.example.backend.domain.feed.entity.Post;
+import com.example.backend.domain.feed.exception.PostCanNotDeleteException;
+import com.example.backend.domain.feed.exception.PostNotExistedException;
 import com.example.backend.domain.feed.repository.PostRepository;
 import com.example.backend.domain.user.entity.User;
-import com.example.backend.domain.user.repository.UserRepository;
 import com.example.backend.global.util.AuthUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.expression.spel.ast.OpOr;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -27,17 +25,61 @@ public class PostService {
     private final PostRepository postRepository;
 
 
-    public void postUpload(PostUploadRequest postUploadRequest) {
+    // 게시물 업로드
+    @Transactional
+    public PostUploadResponse postUpload(PostUploadRequest postUploadRequest) {
 
+        // 현재 로그인한 유저정보를 가져온다.
         User loginUser = authUtil.getLoginUser();
 
-        PostDTO postDTO = new PostDTO(loginUser, postUploadRequest.getContent());
-
-        Post save = postRepository.save(postDTO.toEntity());
+        Post post = new Post(loginUser, postUploadRequest.getContent());
+ 
+        Post save = postRepository.save(post);
 
         postImageService.saveAll(save, postUploadRequest.getFiles());
 
+        return new PostUploadResponse(save.getId());
 
+    }
+
+    @Transactional
+    public void deletePost(Long postId) {
+
+        // 로그인한 유저를 가져온다.
+        User loginUser = authUtil.getLoginUser();
+
+        // 해당 된 게시물을 가져온다.
+        Post findPost = getPost(postId);
+
+        if (!findPost.getUser().getId().equals(loginUser.getId()))
+            throw new PostCanNotDeleteException();
+
+        postImageService.deleteAll(findPost);
+
+        postRepository.delete(findPost);
+
+    }
+
+    private Post getPost(Long postId) {
+        Post getPost = postRepository.findPostById(postId).orElseThrow(
+                () -> new PostNotExistedException());
+
+        return getPost;
+
+    }
+
+
+    // 특정 유저의 멤버 번호를 통해 해당 유저의 모든 게시물 조회
+    public List<PostResponse> getUserAllPost(Long userId) {
+
+        List<PostResponse> responses = new ArrayList<>();
+
+        for (Post post : postRepository.findAllByUserId(userId).orElseThrow(
+                () -> new PostNotExistedException()
+        )) {
+            responses.add(new PostResponse(post));
+        }
+        return responses;
     }
 
 

@@ -1,0 +1,10 @@
+build/**
+.gradle/**
+.idea/**
+
+out/**
+src/main/resources/application-jwt.yml
+src/main/resources/application-mysql.yml
+src/main/resources/application-minio.yml
+src/main/resources/application-oauth2.yml
+src/main/resources/application-swagger.yml

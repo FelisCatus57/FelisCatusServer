@@ -7,8 +7,6 @@ import com.example.backend.domain.user.entity.User;
 import com.example.backend.domain.user.exception.NicknameAlreadyExistedException;
 import com.example.backend.domain.user.exception.UsernameAlreadyExistedException;
 import com.example.backend.domain.user.repository.UserRepository;
-import com.example.backend.global.error.ErrorCodeMessage;
-import com.example.backend.global.error.exception.EntityNotExistedException;
 import com.example.backend.global.image.Image;
 import com.example.backend.global.image.ImageType;
 import jakarta.transaction.Transactional;
@@ -30,7 +28,7 @@ public class UserService {
             throw new UsernameAlreadyExistedException();
         }
 
-        if (userRepository.existsUsersByNickname(userRegisterRequest.getNickname())) {
+        if (userRepository.existsUserByNickname(userRegisterRequest.getNickname())) {
             throw new NicknameAlreadyExistedException();
         }
 
@@ -39,6 +37,7 @@ public class UserService {
                 .password(userRegisterRequest.getPassword())
                 .nickname(userRegisterRequest.getNickname())
                 .name(userRegisterRequest.getName())
+                .email(userRegisterRequest.getEmail())
                 .role(Role.USER)
                 .gender(Gender.PRIVATE)
                 .image(Image.builder()

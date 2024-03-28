@@ -3,7 +3,6 @@ package com.example.backend.global.error;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
 import org.springframework.validation.BindingResult;
 
 import java.util.ArrayList;

@@ -2,8 +2,8 @@ package com.example.backend.global.authorization.jwt.filter;
 
 import com.example.backend.domain.user.entity.User;
 import com.example.backend.domain.user.repository.UserRepository;
-import com.example.backend.global.util.RandomPasswordUtil;
 import com.example.backend.global.authorization.jwt.service.JwtService;
+import com.example.backend.global.util.RandomPasswordUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -33,6 +33,8 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+
+
 
         if (request.getRequestURI().equals(NO_CHECK_URL)) { // "/login" 경로로 요청이 들어오면
             filterChain.doFilter(request, response); // 다음 필터 호출
