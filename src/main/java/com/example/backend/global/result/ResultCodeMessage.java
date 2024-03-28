@@ -17,7 +17,10 @@ public enum ResultCodeMessage {
     GET_USER_POST_SUCCESS(200, "유저 게시물 조회에 성공하였습니다."),
 
     COMMENT_SUCCESS(200, "댓글 작성에 성공하였습니다."),
-    COMMENT_DELETE_SUCCESS(200, "댓글 삭제에 성공하였습니다.");
+    COMMENT_DELETE_SUCCESS(200, "댓글 삭제에 성공하였습니다."),
+
+    POST_LIKE_SUCCESS(200, "게시물 좋아요에 성공하였습니다."),
+    POST_UNLIKE_SUCCESS(200, "게시물 좋아요 취소에 성공하였습니다.");
 
 
 

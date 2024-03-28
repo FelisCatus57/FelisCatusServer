@@ -30,6 +30,11 @@ public enum ErrorCodeMessage {
     GET_POST_COMMENT_FAIL(400, "게시글 댓글 조회에 실패 하였습니다."),
     COMMENT_USER_DELETE_FAIL(400, "작성자만 삭제 가능한 댓글입니다."),
 
+    // Like
+    POST_LIKE_FAIL(400, "게시물 좋아요에 실패하였습니다"),
+    POST_LIKE_ALREADY_EXISTED(400, "이미 좋아요를 누른 게시물 입니다."),
+
+
     // TODO Status 변환하기
     JWT_REFRESHTOKEN_EXPIRED(401, "만료된 리프레시 토큰입니다."),
     JWT_TOKEN_INVALID( 401, "유효하지 않은 토큰입니다."),
