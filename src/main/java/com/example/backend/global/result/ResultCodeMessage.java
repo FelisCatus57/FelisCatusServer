@@ -12,6 +12,8 @@ public enum ResultCodeMessage {
     LOGIN_SUCCESS(200, "로그인에 성공하였습니다."),
     REISSUE_SUCCESS(200, "토큰 재발급에 성공하였습니다."),
 
+    USER_POST_VIEW_SUCCESS(200, "유저 게시물 조회에 성공하였습니다."),
+
     POST_SUCCESS(200, "게시물 작성에 성공하였습니다."),
     POST_DELETE_SUCCESS(200, "게시물 삭제에 성공하였습니다."),
     GET_USER_POST_SUCCESS(200, "유저 게시물 조회에 성공하였습니다."),
