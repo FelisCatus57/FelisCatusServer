@@ -20,9 +20,10 @@ public enum ResultCodeMessage {
     COMMENT_DELETE_SUCCESS(200, "댓글 삭제에 성공하였습니다."),
 
     POST_LIKE_SUCCESS(200, "게시물 좋아요에 성공하였습니다."),
-    POST_UNLIKE_SUCCESS(200, "게시물 좋아요 취소에 성공하였습니다.");
+    POST_UNLIKE_SUCCESS(200, "게시물 좋아요 취소에 성공하였습니다."),
 
-
+    COMMENT_LIKE_SUCCESS(200, "댓글 좋아요에 성공하였습니다."),
+    COMMENT_UNLIKE_SUCCESS(200, "댓글 좋아요 취소에 성공하였습니다.");
 
     private final int status;
     private final String message;
