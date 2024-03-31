@@ -19,7 +19,7 @@ public class PostResponse {
     private Long postId;
 
     @Schema(description = "유저 정보")
-    private UserResponseDTO userResponseDTO;
+    private UserFeedResponse userFeedResponse;
 
     @Schema(description = "게시물 내용")
     private String content;
@@ -33,7 +33,7 @@ public class PostResponse {
     public PostResponse(Post post) {
         this.postId = post.getId();
         this.content = post.getContent();
-        this.userResponseDTO = new UserResponseDTO(post.getUser());
+        this.userFeedResponse = new UserFeedResponse(post.getUser());
         this.postImageResponse = new PostImageResponse().PostImageResponse(post.getImages());
         this.createdDate = post.getCreatedDate();
 

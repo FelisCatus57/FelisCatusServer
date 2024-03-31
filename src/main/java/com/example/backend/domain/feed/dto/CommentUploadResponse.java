@@ -22,7 +22,7 @@ public class CommentUploadResponse {
     private Long parentId;
 
     @Schema(description = "댓글 작성한 유저 정보")
-    private UserResponseDTO userResponseDTO;
+    private UserFeedResponse userFeedResponse;
 
     @Schema(description = "댓글 내용")
     private String content;
@@ -41,7 +41,7 @@ public class CommentUploadResponse {
         } else {
             this.parentId = comment.getParent().getId();
         }
-        this.userResponseDTO = new UserResponseDTO(comment.getUser());
+        this.userFeedResponse = new UserFeedResponse(comment.getUser());
         this.content = comment.getContent();
         this.commentChildrenRespons = new CommentChildrenResponse().CommentParentResponse(comment.getChildren());
         this.createdDate = comment.getCreatedDate();

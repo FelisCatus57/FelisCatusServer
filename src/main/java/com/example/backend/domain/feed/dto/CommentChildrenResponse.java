@@ -24,7 +24,7 @@ public class CommentChildrenResponse {
     private String createdDate;
 
     @Schema(description = "자식 댓글 유저 정보")
-    private UserResponseDTO userResponseDTO;
+    private UserFeedResponse userFeedResponse;
 
     @Hidden
     public List<CommentChildrenResponse> CommentParentResponse(List<Comment> children) {
@@ -33,7 +33,7 @@ public class CommentChildrenResponse {
 
         children.forEach( ch -> {
 
-            CommentChildrenResponse CommentChildrenResponse = new CommentChildrenResponse(ch.getId(), ch.getContent(), ch.getCreatedDate(), new UserResponseDTO(ch.getUser()));
+            CommentChildrenResponse CommentChildrenResponse = new CommentChildrenResponse(ch.getId(), ch.getContent(), ch.getCreatedDate(), new UserFeedResponse(ch.getUser()));
 
             responses.add(CommentChildrenResponse);
 
