@@ -15,6 +15,8 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     Optional<List<Post>> findAllByUserId(Long userId);
 
+    Optional<List<Post>> findAllByUserNickname(String nickname);
+
 
 
 

@@ -60,6 +60,21 @@ public class PostService {
 
     }
 
+    @Transactional
+    public List<PostResponse> getAllPostByUserNickname(String nickname) {
+
+        List<PostResponse> postResponses = new ArrayList<>();
+
+        List<Post> posts = postRepository.findAllByUserNickname(nickname).orElseThrow(
+                () -> new PostNotExistedException());
+
+        posts.forEach(
+                post -> postResponses.add(new PostResponse(post))
+        );
+
+        return postResponses;
+    }
+
     private Post getPost(Long postId) {
         Post getPost = postRepository.findPostById(postId).orElseThrow(
                 () -> new PostNotExistedException());
