@@ -36,7 +36,7 @@ public class CommentLike {
 
 
     @Builder
-    CommentLike(User user, Comment comment) {
+    public CommentLike(User user, Comment comment) {
         this.user = user;
         this.comment = comment;
     }
