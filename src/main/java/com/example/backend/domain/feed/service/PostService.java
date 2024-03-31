@@ -97,6 +97,10 @@ public class PostService {
         return responses;
     }
 
+    public Long getUserPostCount(String nickname) {
+        return postRepository.countAllByUserNickname(nickname);
+    }
+
 
 
 }
