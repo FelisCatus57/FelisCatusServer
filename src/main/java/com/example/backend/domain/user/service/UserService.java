@@ -22,7 +22,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public void signUp(UserRegisterRequest userRegisterRequest) throws Exception{
+    public User signUp(UserRegisterRequest userRegisterRequest) throws Exception{
 
         if (userRepository.existsUserByUsername(userRegisterRequest.getUsername())) {
             throw new UsernameAlreadyExistedException();
@@ -50,6 +50,8 @@ public class UserService {
 
         user.setEncPassword(bCryptPasswordEncoder);
 
-        userRepository.save(user);
+        User save = userRepository.save(user);
+
+        return save;
     }
 }
