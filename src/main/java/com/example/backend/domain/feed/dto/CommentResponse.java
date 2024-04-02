@@ -10,7 +10,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @Schema(description = "댓글 작성 응답 DTO")
-public class CommentUploadResponse {
+public class CommentResponse {
 
     @Schema(description = "댓글 번호")
     private Long commentId;
@@ -31,9 +31,9 @@ public class CommentUploadResponse {
     private String createdDate;
 
     @Schema(description = "자식 댓글")
-    private List<CommentChildrenResponse> commentChildrenRespons;
+    private List<CommentChildrenResponse> commentChildrenResponses;
 
-    public CommentUploadResponse(Comment comment) {
+    public CommentResponse(Comment comment) {
         this.commentId = comment.getId();
         this.postId = comment.getPost().getId();
         if (comment.getParent() == null) {
@@ -43,7 +43,7 @@ public class CommentUploadResponse {
         }
         this.userFeedResponse = new UserFeedResponse(comment.getUser());
         this.content = comment.getContent();
-        this.commentChildrenRespons = new CommentChildrenResponse().CommentParentResponse(comment.getChildren());
+        this.commentChildrenResponses = new CommentChildrenResponse().CommentParentResponse(comment.getChildren());
         this.createdDate = comment.getCreatedDate();
     }
 
