@@ -13,6 +13,8 @@ public enum ResultCodeMessage {
     REISSUE_SUCCESS(200, "토큰 재발급에 성공하였습니다."),
     MY_PAGE_VIEW_SUCCESS(200, "유저 페이지 조회에 성공하였습니다."),
 
+    POST_COMMENT_VIEW_SUCCESS(200, "게시물에 달린 모든 댓글 조회에 성공하였습니다."),
+
     USER_POST_VIEW_SUCCESS(200, "유저 게시물 조회에 성공하였습니다."),
 
     POST_SUCCESS(200, "게시물 작성에 성공하였습니다."),

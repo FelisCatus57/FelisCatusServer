@@ -17,6 +17,7 @@ public enum ErrorCodeMessage {
     USERNAME_EXISTED(400,  "이미 존재하는 아이디 입니다."),
     NICKNAME_EXISTED(400,  "이미 존재하는 닉네임 입니다."),
     AUTHENTICATION_FAIL(401,  "로그인이 필요한 회원입니다."),
+    PASSWORD_NOT_MATCH(401, "비밀번호가 일치하지 않습니다."),
     ACCOUNT_MISMATCH(401,  "회원 정보가 일치하지 않습니다."),
     AUTHORITY_INVALID(403,  "권한이 없습니다."),
 
@@ -36,7 +37,7 @@ public enum ErrorCodeMessage {
 
 
     // TODO Status 변환하기
-    JWT_REFRESHTOKEN_EXPIRED(401, "만료된 리프레시 토큰입니다."),
+    JWT_REFRESH_TOKEN_EXPIRED(401, "만료된 리프레시 토큰입니다."),
     JWT_TOKEN_INVALID( 401, "유효하지 않은 토큰입니다."),
     JWT_TOKEN_EXPIRED( 401, "만료된 토큰입니다."),
 
