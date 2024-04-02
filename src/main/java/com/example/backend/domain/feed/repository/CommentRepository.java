@@ -19,5 +19,6 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
 
     List<Comment> findTop2ByPostIdOrderByCreatedDateDesc(Long postId);
 
-    Long countAllByPostId(Long postId);
+    Long countAllByPostId(Long PostId);
+
 }
