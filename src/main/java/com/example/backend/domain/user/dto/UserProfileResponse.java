@@ -39,8 +39,8 @@ public class UserProfileResponse {
 //    @Schema(description = "유저 팔로우 수")
 //    private Long UserFollowCount;
 
-    @Schema(description = "본인 게시글")
-    private List<PostResponse> myPost;
+    @Schema(description = "유저 게시글")
+    private List<PostResponse> userPost;
 
     public UserProfileResponse(User user, List<PostResponse> posts) {
         this.UserNickname = user.getNickname();
@@ -49,7 +49,7 @@ public class UserProfileResponse {
         this.UserImage = user.getImage();
         this.UserIntroduce = user.getIntroduce();
         this.UserWebsite = user.getWebsite();
-        this.myPost = posts;
+        this.userPost = posts;
     }
 
 }
