@@ -1,9 +1,11 @@
 package com.example.backend.domain.user.service;
 
+import com.example.backend.common.minio.MinioUploader;
 import com.example.backend.domain.feed.dto.PostResponse;
 import com.example.backend.domain.feed.service.PostService;
 import com.example.backend.domain.user.Enum.Gender;
 import com.example.backend.domain.user.Enum.Role;
+import com.example.backend.domain.user.dto.UserProfileEditRequest;
 import com.example.backend.domain.user.dto.UserProfileResponse;
 import com.example.backend.domain.user.dto.UserRegisterRequest;
 import com.example.backend.domain.user.entity.User;
@@ -18,6 +20,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -26,11 +29,17 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserService {
 
+
+    private static final String MINIO_PROFILE_DIR = "profile";
+
     private final AuthUtil authUtil;
     private final UserRepository userRepository;
     private final PostService postService;
+    private final MinioUploader minioUploader;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
+
+    @Transactional
     public User signUp(UserRegisterRequest userRegisterRequest) {
 
         if (userRepository.existsUserByUsername(userRegisterRequest.getUsername())) {
@@ -64,6 +73,7 @@ public class UserService {
         return save;
     }
 
+    @Transactional
     public UserProfileResponse getProfile(String nickname) {
 
         User loginUser = authUtil.getLoginUser();
@@ -84,4 +94,65 @@ public class UserService {
         return userProfileResponse;
 
     }
+
+//    @Transactional
+//    public boolean checkPassword(String rawPassword) {
+//        User loginUser = authUtil.getLoginUser();
+//
+//        if (!bCryptPasswordEncoder.matches(rawPassword, loginUser.getPassword())) {
+//            new PasswordNotMatchException();
+//            return false;
+//        } else {
+//            return true;
+//        }
+//    }
+
+    @Transactional
+    public void modifyProfile(UserProfileEditRequest userProfileEditRequest) {
+
+        User loginUser = authUtil.getLoginUser();
+
+        loginUser.updateIntroduce(userProfileEditRequest.getIntroduce());
+        loginUser.updateWebsite(userProfileEditRequest.getWebsite());
+
+        Gender gender = userProfileEditRequest.getGender();
+
+        if (gender == null) {
+            loginUser.updateGender(loginUser.getGender());
+        } else {
+            loginUser.updateGender(gender);
+        }
+
+        userRepository.save(loginUser);
+
+    }
+
+    @Transactional
+    public void updateImage(MultipartFile multipartFile) {
+
+        User loginUser = authUtil.getLoginUser();
+
+        deleteImage();
+
+        Image image = minioUploader.to(multipartFile, MINIO_PROFILE_DIR);
+
+        loginUser.updateImage(image);
+
+        userRepository.save(loginUser);
+
+    }
+
+    @Transactional
+    public void deleteImage() {
+
+        User loginUser = authUtil.getLoginUser();
+
+        if (!loginUser.getImage().getImageUUID().equals("base-UUID")) {
+            minioUploader.deleteImage(loginUser.getImage(), MINIO_PROFILE_DIR);
+        }
+
+        loginUser.resetImage();
+        userRepository.save(loginUser);
+    }
+
 }
