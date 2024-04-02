@@ -1,25 +1,22 @@
 package com.example.backend.domain.user.dto;
 
+import com.example.backend.domain.user.Enum.Gender;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-@Schema(description = "유저 정보수정 요청 DTO")
-public class UserProfileEditDTO {
+@Schema(description = "유저 정보 수정 요청 DTO")
+public class UserProfileEditRequest {
 
-    @Schema(description = "유저 번호")
-    private Long id;
+    @Schema(description = "유저 웹사이트")
+    private String website;
 
-    @Schema(description = "유저 아이디")
-    private String username;
+    @Schema(description = "유저 소개글")
+    private String introduce;
 
-    @Schema(description = "유저 이름")
-    private String name;
+    @Schema(description = "유저 성별")
+    private Gender gender;
 
-    @Schema(description = "유저 닉네임")
-    private String nickname;
-
-//    private String
 }
