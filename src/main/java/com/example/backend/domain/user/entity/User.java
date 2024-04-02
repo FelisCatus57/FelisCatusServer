@@ -6,6 +6,7 @@ import com.example.backend.domain.user.Enum.SocialType;
 import com.example.backend.global.BaseTimeEntity;
 import com.example.backend.global.image.Image;
 import com.example.backend.global.image.ImageType;
+import com.example.backend.global.util.ImageUtil;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -93,6 +94,8 @@ public class User extends BaseTimeEntity {
         this.password = bCryptPasswordEncoder.encode(this.password);
     }
 
+    // 프로필 이미지 삭제 -> 삭제 후 기본이미지로 설정 (if 기본이미지 ? 그냥 return)
+
     public void updateName(String name) {
         this.name = name;
     }
@@ -111,6 +114,23 @@ public class User extends BaseTimeEntity {
 
     public void updateWebsite(String website) {
         this.website = website;
+    }
+
+    public void updateGender(Gender gender) {
+        this.gender = gender;
+    }
+
+    public void updateImage(Image image) {
+        resetImage();
+        this.image = image;
+    }
+
+    public void resetImage() {
+        if (this.image.getImageUUID().equals("base-UUID")) {
+            return;
+        }
+
+        this.image = ImageUtil.getBaseImage();
     }
 
     // 리프레시 토큰 업데이트 메소드

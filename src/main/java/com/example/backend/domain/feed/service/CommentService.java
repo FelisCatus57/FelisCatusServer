@@ -1,7 +1,7 @@
 package com.example.backend.domain.feed.service;
 
 import com.example.backend.domain.feed.dto.CommentUploadRequest;
-import com.example.backend.domain.feed.dto.CommentUploadResponse;
+import com.example.backend.domain.feed.dto.CommentResponse;
 import com.example.backend.domain.feed.entity.Comment;
 import com.example.backend.domain.feed.entity.Post;
 import com.example.backend.domain.feed.exception.CommentNotExistedException;
@@ -16,6 +16,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class CommentService {
@@ -26,7 +29,7 @@ public class CommentService {
     private final CommentRepository commentRepository;
 
     @Transactional
-    public CommentUploadResponse commentUpload(CommentUploadRequest commentUploadRequest, Long postId) {
+    public CommentResponse commentUpload(CommentUploadRequest commentUploadRequest, Long postId) {
 
         // 현재 댓글을 적을 포스트를 가져온다.
         Post findPost = getPost(postId);
@@ -36,11 +39,11 @@ public class CommentService {
 
         Comment saved = commentRepository.save(new Comment(loginUser, findPost, commentUploadRequest.getContent()));
 
-        return new CommentUploadResponse(saved);
+        return new CommentResponse(saved);
     }
 
     @Transactional
-    public CommentUploadResponse childrenCommentUpload(CommentUploadRequest commentUploadRequest, Long postId, Long commentId) {
+    public CommentResponse childrenCommentUpload(CommentUploadRequest commentUploadRequest, Long postId, Long commentId) {
 
         // 현재 댓글을 적을 포스트를 가져온다.
         Post findPost = getPost(postId);
@@ -53,7 +56,7 @@ public class CommentService {
 
         Comment saved = commentRepository.save(new Comment(parentComment, loginUser, findPost, commentUploadRequest.getContent()));
 
-        return new CommentUploadResponse(saved);
+        return new CommentResponse(saved);
     }
 
     @Transactional
@@ -70,6 +73,23 @@ public class CommentService {
 
         // 자식 댓글이라면
         commentRepository.delete(findComment);
+    }
+
+    public List<CommentResponse> getAllCommentByPostId(Long postId) {
+
+        List<CommentResponse> commentResponses = new ArrayList<>();
+
+        List<Comment> allByPostId = commentRepository.findAllByPostId(postId);
+
+        allByPostId.forEach(
+                comment -> commentResponses.add(new CommentResponse(comment))
+        );
+
+        return commentResponses;
+    }
+
+    public Long getPostCommentCount(Long postId) {
+        return commentRepository.countAllByPostId(postId);
     }
 
     private Comment getComment(Long commentId) {

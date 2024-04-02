@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Schema(description = "유저 정보 응답 DTO")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class UserResponseDTO {
+public class UserFeedResponse {
 
     @Schema(description = "유저 번호")
     private Long userId;
@@ -25,7 +25,7 @@ public class UserResponseDTO {
     @Schema(description = "유저 이미지 정보")
     private String userProfileUrl;
 
-    public UserResponseDTO(User user) {
+    public UserFeedResponse(User user) {
         this.userId = user.getId();
         this.username = user.getUsername();
         this.nickname = user.getNickname();

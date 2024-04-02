@@ -1,5 +1,6 @@
 package com.example.backend.global.error;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,10 +12,16 @@ import java.util.stream.Collectors;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Schema(description = "에러 반환 DTO")
 public class ErrorResponseDTO {
 
+    @Schema(description = "상태 코드")
     private int status;
+
+    @Schema(description = "메시지")
     private String message;
+
+    @Schema(description = "에러 내용")
     private List<FieldError> errors;
 
     private ErrorResponseDTO(ErrorCodeMessage errorCodeMessage, List<FieldError> errors) {

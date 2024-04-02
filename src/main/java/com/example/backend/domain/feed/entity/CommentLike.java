@@ -8,7 +8,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@Table(name = "comment_likes")
+@Table(name = "comment_likes", uniqueConstraints = {
+        @UniqueConstraint(
+                name = "comment_likes_uk",
+                columnNames = {
+                        "user_id",
+                        "comment_id"
+                }
+        )
+})
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class CommentLike {
@@ -28,7 +36,7 @@ public class CommentLike {
 
 
     @Builder
-    CommentLike(User user, Comment comment) {
+    public CommentLike(User user, Comment comment) {
         this.user = user;
         this.comment = comment;
     }

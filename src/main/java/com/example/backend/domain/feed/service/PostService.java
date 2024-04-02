@@ -23,6 +23,7 @@ public class PostService {
     private final AuthUtil authUtil;
     private final PostImageService postImageService;
     private final PostRepository postRepository;
+    private final CommentService commentService;
 
 
     // 게시물 업로드
@@ -60,6 +61,22 @@ public class PostService {
 
     }
 
+    @Transactional
+    public List<PostResponse> getAllPostByUserNickname(String nickname) {
+
+        List<PostResponse> postResponses = new ArrayList<>();
+
+        List<Post> posts = postRepository.findAllByUserNickname(nickname).orElseThrow(
+                () -> new PostNotExistedException());
+
+        for (Post post : posts) {
+            Long postCommentCount = commentService.getPostCommentCount(post.getId());
+            postResponses.add(new PostResponse(post, postCommentCount));
+        }
+
+        return postResponses;
+    }
+
     private Post getPost(Long postId) {
         Post getPost = postRepository.findPostById(postId).orElseThrow(
                 () -> new PostNotExistedException());
@@ -77,9 +94,15 @@ public class PostService {
         for (Post post : postRepository.findAllByUserId(userId).orElseThrow(
                 () -> new PostNotExistedException()
         )) {
-            responses.add(new PostResponse(post));
+            Long postCommentCount = commentService.getPostCommentCount(post.getId());
+
+            responses.add(new PostResponse(post, postCommentCount));
         }
         return responses;
+    }
+
+    public Long getUserPostCount(String nickname) {
+        return postRepository.countAllByUserNickname(nickname);
     }
 
 
