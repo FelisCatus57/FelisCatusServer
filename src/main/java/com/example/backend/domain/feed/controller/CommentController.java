@@ -1,7 +1,7 @@
 package com.example.backend.domain.feed.controller;
 
 import com.example.backend.domain.feed.dto.CommentUploadRequest;
-import com.example.backend.domain.feed.dto.CommentUploadResponse;
+import com.example.backend.domain.feed.dto.CommentResponse;
 import com.example.backend.domain.feed.service.CommentLikeService;
 import com.example.backend.domain.feed.service.CommentService;
 import com.example.backend.global.result.ResultCodeMessage;
@@ -16,6 +16,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @ResponseBody
 @RestController
 @RequiredArgsConstructor
@@ -25,29 +27,38 @@ public class CommentController {
     private final CommentService commentService;
     private final CommentLikeService commentLikeService;
 
+    // 댓글 가져오기
+    @GetMapping("/api/{postId}/comment")
+    public ResponseEntity<ResultResponseDTO> getComments(@PathVariable("postId") Long postId) {
+
+        List<CommentResponse> allCommentByPostId = commentService.getAllCommentByPostId(postId);
+
+        return ResponseEntity.ok(ResultResponseDTO.of(ResultCodeMessage.POST_COMMENT_VIEW_SUCCESS, allCommentByPostId));
+    }
+
 
     // TODO Swagger 설정하기
     @Operation(summary = "부모 댓글 작성", description = "댓글 작성")
     @Parameter(name = "postId", description = "게시글 번호", required = true)
-    @ApiResponse(responseCode = "200", description = "댓글 작성 성공", content = @Content(schema = @Schema(implementation = CommentUploadResponse.class)))
+    @ApiResponse(responseCode = "200", description = "댓글 작성 성공", content = @Content(schema = @Schema(implementation = CommentResponse.class)))
     @PostMapping("/api/{postId}/comment")
     public ResponseEntity<ResultResponseDTO> uploadComment(@PathVariable("postId") Long postId, @RequestBody CommentUploadRequest commentUploadRequest) {
 
-        CommentUploadResponse commentUploadResponse = commentService.commentUpload(commentUploadRequest, postId);
+        CommentResponse commentResponse = commentService.commentUpload(commentUploadRequest, postId);
 
-        return ResponseEntity.ok(ResultResponseDTO.of(ResultCodeMessage.COMMENT_SUCCESS, commentUploadResponse));
+        return ResponseEntity.ok(ResultResponseDTO.of(ResultCodeMessage.COMMENT_SUCCESS, commentResponse));
     }
 
     @Operation(summary = "자식 댓글 작성", description = "댓글 작성")
     @Parameter(name = "postId", description = "게시글 번호", required = true)
     @Parameter(name = "commentId", description = "부모 댓글 번호", required = true)
-    @ApiResponse(responseCode = "200", description = "댓글 작성 성공", content = @Content(schema = @Schema(implementation = CommentUploadResponse.class)))
+    @ApiResponse(responseCode = "200", description = "댓글 작성 성공", content = @Content(schema = @Schema(implementation = CommentResponse.class)))
     @PostMapping("/api/{postId}/comment/{commentId}")
     public ResponseEntity<ResultResponseDTO> uploadChildrenComment(@PathVariable("postId") Long postId, @PathVariable("commentId") Long commentId , @RequestBody CommentUploadRequest commentUploadRequest) {
 
-        CommentUploadResponse commentUploadResponse = commentService.childrenCommentUpload(commentUploadRequest, postId, commentId);
+        CommentResponse commentResponse = commentService.childrenCommentUpload(commentUploadRequest, postId, commentId);
 
-        return ResponseEntity.ok(ResultResponseDTO.of(ResultCodeMessage.COMMENT_SUCCESS, commentUploadResponse));
+        return ResponseEntity.ok(ResultResponseDTO.of(ResultCodeMessage.COMMENT_SUCCESS, commentResponse));
     }
 
     @Operation(summary = "댓글 삭제", description = "댓글 삭제 [부모 댓글이 삭제될 경우 자식 댓글은 모두 삭제]")
