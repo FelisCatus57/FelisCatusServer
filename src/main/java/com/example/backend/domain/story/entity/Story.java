@@ -30,15 +30,12 @@ public class Story {
 
     @Embedded
     @AttributeOverrides({
-            @AttributeOverride(name = "image_id", column = @Column(name = "image_id")),
-            @AttributeOverride(name = "image_url", column = @Column(name = "image_url"))
-
+            @AttributeOverride(name = "imageUrl", column = @Column(name = "user_img_url")),
+            @AttributeOverride(name = "imageType", column = @Column(name = "user_img_type")),
+            @AttributeOverride(name = "imageName", column = @Column(name = "user_img_name")),
+            @AttributeOverride(name = "imageUUID", column = @Column(name = "user_img_uuid"))
     })
     private Image image;
-
-    @Column(name = "upload_at")
-    @CreatedDate
-    private LocalDateTime uploadAt;
 
     public Story(User user, Image image) {
         this.user = user;

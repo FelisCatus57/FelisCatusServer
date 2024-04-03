@@ -9,4 +9,6 @@ import java.util.Optional;
 //CURD 구현
 public interface StoryRepository extends JpaRepository<Story, Long> {
 
+
+
 }
