@@ -1,7 +1,6 @@
 package com.example.backend.domain.story.dto;
 
 
-import com.example.backend.domain.story.entity.Story;
 import com.example.backend.domain.user.entity.User;
 import com.example.backend.global.image.Image;
 import lombok.AllArgsConstructor;
@@ -22,4 +21,5 @@ public class StoryRequest {
     private Image image;
 
     private List<MultipartFile> files = new ArrayList<>();
+
 }

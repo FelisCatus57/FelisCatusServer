@@ -5,6 +5,7 @@ import com.example.backend.domain.user.entity.User;
 import com.example.backend.global.image.Image;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
@@ -37,6 +38,10 @@ public class Story {
     })
     private Image image;
 
+    @CreatedDate
+    private LocalDateTime createdDate;
+
+    @Builder
     public Story(User user, Image image) {
         this.user = user;
         this.image = image;

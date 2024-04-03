@@ -19,7 +19,7 @@ public class StoryVisitor {
     @Column(name = "visitors")
     private Long id;
 
-    
+
 
 
 }
