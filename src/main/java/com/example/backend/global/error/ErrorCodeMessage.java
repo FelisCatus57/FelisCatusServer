@@ -24,6 +24,7 @@ public enum ErrorCodeMessage {
     // Post
     POST_NOT_FOUND(400, "존재하지 않는 포스트 입니다."),
     GET_USER_POST_FAIL(400, "유저 게시물 조회에 실패 하였습니다."),
+    POST_USER_UPDATE_FAIL(400, "작성자만 수정 가능한 게시물입니다."),
     POST_USER_DELETE_FAIL(400, "작성자만 삭제 가능한 게시물입니다."),
 
     // Comment
@@ -42,9 +43,11 @@ public enum ErrorCodeMessage {
     JWT_TOKEN_EXPIRED( 401, "만료된 토큰입니다."),
 
     // Oauth2
-    OAUTH2_INVALID_REQUEST(400, "정상적인 요청이 아닙니다.");
+    OAUTH2_INVALID_REQUEST(400, "정상적인 요청이 아닙니다."),
 
 
+    // FileConvert
+    FILE_IMAGE_TYPE_MISMATCH(400, "파일 확장자가 지원되지 않습니다.");
 
     private final int status;
     private final String message;
