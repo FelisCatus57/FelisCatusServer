@@ -112,16 +112,13 @@ public class UserService {
 
         User loginUser = authUtil.getLoginUser();
 
-        loginUser.updateIntroduce(userProfileEditRequest.getIntroduce());
-        loginUser.updateWebsite(userProfileEditRequest.getWebsite());
+        loginUser.updateIntroduce(userProfileEditRequest.getIntroduce().isEmpty() ? loginUser.getIntroduce() : userProfileEditRequest.getIntroduce());
+        loginUser.updateWebsite(userProfileEditRequest.getWebsite().isEmpty() ? loginUser.getWebsite() : userProfileEditRequest.getWebsite());
+        loginUser.updatePhoneNo(userProfileEditRequest.getPhoneNo().isEmpty() ? loginUser.getPhoneNo() : userProfileEditRequest.getPhoneNo());
 
         Gender gender = userProfileEditRequest.getGender();
 
-        if (gender == null) {
-            loginUser.updateGender(loginUser.getGender());
-        } else {
-            loginUser.updateGender(gender);
-        }
+        loginUser.updateGender(userProfileEditRequest.getGender() == null ? loginUser.getGender() : gender);
 
         userRepository.save(loginUser);
 
