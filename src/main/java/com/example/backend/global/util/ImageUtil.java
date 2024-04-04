@@ -1,5 +1,6 @@
 package com.example.backend.global.util;
 
+import com.example.backend.global.error.exception.FileImageTypeMismatch;
 import com.example.backend.global.image.Image;
 import com.example.backend.global.image.ImageType;
 import com.google.common.base.Enums;
@@ -18,8 +19,7 @@ public class ImageUtil {
 
         // 확장자가 일치 하지 않으면
         if (!Enums.getIfPresent(ImageType.class, type).isPresent()) {
-            throw new RuntimeException();
-            //TODO 나중에 커스텀 Exception 넣기
+            throw new FileImageTypeMismatch();
         }
 
         return Image.builder()
