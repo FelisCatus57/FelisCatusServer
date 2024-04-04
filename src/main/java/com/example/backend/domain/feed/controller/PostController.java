@@ -1,5 +1,7 @@
 package com.example.backend.domain.feed.controller;
 
+import com.example.backend.domain.feed.dto.PostEditRequest;
+import com.example.backend.domain.feed.dto.PostResponse;
 import com.example.backend.domain.feed.dto.PostUploadRequest;
 import com.example.backend.domain.feed.dto.PostUploadResponse;
 import com.example.backend.domain.feed.service.PostLikeService;
@@ -58,6 +60,15 @@ public class PostController {
         postService.deletePost(postId);
 
         return ResponseEntity.ok(ResultResponseDTO.of(ResultCodeMessage.POST_DELETE_SUCCESS));
+    }
+
+    @Operation(summary = "게시물 수정", description = "게시물 수정 페이지")
+    @PostMapping("/api/post/{postId}")
+    public ResponseEntity<ResultResponseDTO> editPost(@PathVariable("postId") Long postId, @RequestBody PostEditRequest postEditRequest) {
+
+        PostResponse postResponse = postService.modifyPost(postId, postEditRequest);
+
+        return ResponseEntity.ok(ResultResponseDTO.of(ResultCodeMessage.POST_UPDATE_SUCCESS, postResponse));
     }
 
     @Operation(summary = "게시물 좋아요", description = "게시물 좋아요")
