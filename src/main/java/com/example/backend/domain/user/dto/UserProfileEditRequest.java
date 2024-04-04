@@ -16,6 +16,9 @@ public class UserProfileEditRequest {
     @Schema(description = "유저 소개글")
     private String introduce;
 
+    @Schema(description = "유저 번호")
+    private String phoneNo;
+
     @Schema(description = "유저 성별")
     private Gender gender;
 
