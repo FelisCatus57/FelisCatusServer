@@ -27,6 +27,9 @@ public class PostResponse {
     @Schema(description = "게시물 생성 날짜")
     private String createdDate;
 
+    @Schema(description = "게시물 수정 날짜")
+    private String modifiedDate;
+
     @Schema(description = "게시물에 달린 댓글 총 개수")
     private Long commentCount;
 
@@ -36,6 +39,7 @@ public class PostResponse {
         this.userFeedResponse = new UserFeedResponse(post.getUser());
         this.postImageResponse = new PostImageResponse().PostImageResponse(post.getImages());
         this.createdDate = post.getCreatedDate();
+        this.modifiedDate = post.getModifiedDate();
         this.commentCount = commentCount;
     }
 
