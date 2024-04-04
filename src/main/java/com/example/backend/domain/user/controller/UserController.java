@@ -1,7 +1,7 @@
 package com.example.backend.domain.user.controller;
 
-import com.example.backend.domain.feed.service.PostService;
 import com.example.backend.domain.user.dto.UserDTO;
+import com.example.backend.domain.user.dto.UserProfileEditRequest;
 import com.example.backend.domain.user.dto.UserProfileResponse;
 import com.example.backend.domain.user.dto.UserRegisterRequest;
 import com.example.backend.domain.user.entity.User;
@@ -20,6 +20,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @ResponseBody
 @RestController
@@ -29,7 +30,6 @@ public class UserController {
 
     private final AuthUtil authUtil;
     private final UserService userService;
-    private final PostService postService;
 
 
     @Operation(summary = "회원가입", description = "회원 가입")
@@ -52,8 +52,34 @@ public class UserController {
 
         UserProfileResponse profile = userService.getProfile(nickname);
 
-        return ResponseEntity.ok(ResultResponseDTO.of(ResultCodeMessage.MY_PAGE_VIEW_SUCCESS, profile));
+        return ResponseEntity.ok(ResultResponseDTO.of(ResultCodeMessage.USER_PAGE_VIEW_SUCCESS, profile));
 
     }
 
+    @Operation(summary = "유저 상세정보 수정", description = "상제정보 수정 페이지")
+    @PostMapping("/api/accounts/edit")
+    public ResponseEntity<ResultResponseDTO> updateProfile(@RequestBody UserProfileEditRequest edit) {
+        userService.modifyProfile(edit);
+        UserProfileResponse profile = userService.getProfile(authUtil.getLoginUserNickname());
+        return ResponseEntity.ok(ResultResponseDTO.of(ResultCodeMessage.USER_PROFILE_UPDATE_SUCCESS, profile));
+    }
+
+    @Operation(summary = "유저 이미지 변경", description = "유저 사진 변경")
+    @PostMapping("/api/accounts/image")
+    public ResponseEntity<ResultResponseDTO> updateImage(@RequestParam MultipartFile image) {
+
+        userService.updateImage(image);
+
+        return ResponseEntity.ok(ResultResponseDTO.of(ResultCodeMessage.USER_PROFILE_IMAGE_UPDATE_SUCCESS));
+    }
+
+
+    @Operation(summary = "유저 이미지 삭제", description = "유저 사진 삭제/리셋")
+    @DeleteMapping("/api/accounts/image")
+    public ResponseEntity<ResultResponseDTO> removeImage() {
+
+        userService.deleteImage();
+
+        return ResponseEntity.ok(ResultResponseDTO.of(ResultCodeMessage.USER_PROFILE_IMAGE_REMOVE_SUCCESS));
+    }
 }
