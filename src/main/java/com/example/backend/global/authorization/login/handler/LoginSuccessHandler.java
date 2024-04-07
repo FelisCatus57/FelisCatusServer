@@ -4,6 +4,9 @@ import com.example.backend.domain.user.entity.User;
 import com.example.backend.domain.user.exception.UserNotExistedException;
 import com.example.backend.domain.user.repository.UserRepository;
 import com.example.backend.global.authorization.jwt.service.JwtService;
+import com.example.backend.global.result.ResultCodeMessage;
+import com.example.backend.global.result.ResultResponseDTO;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +15,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
+
+import java.io.IOException;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -26,7 +31,7 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
     
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-                                                                     Authentication authentication) {
+                                                                     Authentication authentication) throws IOException {
         String username = extractUsername(authentication); // 인증 정보에서 Username 추출
 
         String nickname = extractNickname(username); // Username 을 사용하여 Nickname 추출
@@ -47,6 +52,14 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
         log.info("로그인에 성공하였습니다. 아이디 : {}", username);
         log.info("로그인에 성공하였습니다. AccessToken : {}", accessToken);
         log.info("발급된 AccessToken 만료 기간 : {}", accessTokenExpiration);
+
+        ResultResponseDTO resultResponseDTO = new ResultResponseDTO(ResultCodeMessage.LOGIN_SUCCESS, "");
+
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("application/json; charset=UTF-8");
+
+        new ObjectMapper().writeValue(response.getWriter(), resultResponseDTO);
+
     }
 
     // 인증 객체에서 Username 을 파싱한다.
