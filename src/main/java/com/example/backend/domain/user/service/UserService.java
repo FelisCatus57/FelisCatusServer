@@ -5,6 +5,7 @@ import com.example.backend.domain.feed.dto.PostResponse;
 import com.example.backend.domain.feed.service.PostService;
 import com.example.backend.domain.user.Enum.Gender;
 import com.example.backend.domain.user.Enum.Role;
+import com.example.backend.domain.user.dto.MiniMenuUserResponse;
 import com.example.backend.domain.user.dto.UserProfileEditRequest;
 import com.example.backend.domain.user.dto.UserProfileResponse;
 import com.example.backend.domain.user.dto.UserRegisterRequest;
@@ -13,6 +14,7 @@ import com.example.backend.domain.user.exception.NicknameAlreadyExistedException
 import com.example.backend.domain.user.exception.UserNotExistedException;
 import com.example.backend.domain.user.exception.UsernameAlreadyExistedException;
 import com.example.backend.domain.user.repository.UserRepository;
+import com.example.backend.global.authorization.jwt.service.JwtService;
 import com.example.backend.global.image.Image;
 import com.example.backend.global.image.ImageType;
 import com.example.backend.global.util.AuthUtil;
@@ -36,6 +38,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final PostService postService;
     private final MinioUploader minioUploader;
+    private final JwtService jwtService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
 
@@ -150,6 +153,13 @@ public class UserService {
 
         loginUser.resetImage();
         userRepository.save(loginUser);
+    }
+
+    public MiniMenuUserResponse getMiniMenuUser() {
+
+        User loginUser = authUtil.getLoginUser();
+
+        return new MiniMenuUserResponse(loginUser);
     }
 
 }
