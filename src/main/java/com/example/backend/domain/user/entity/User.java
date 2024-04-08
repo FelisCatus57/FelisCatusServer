@@ -1,5 +1,6 @@
 package com.example.backend.domain.user.entity;
 
+import com.example.backend.domain.follow.entity.Follow;
 import com.example.backend.domain.user.Enum.Gender;
 import com.example.backend.domain.user.Enum.Role;
 import com.example.backend.domain.user.Enum.SocialType;
@@ -11,6 +12,9 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Entity
@@ -55,6 +59,10 @@ public class User extends BaseTimeEntity {
 
     @Column(length = 50)
     private String website; // 웹사이트
+
+    // TODO mappedBy 채우기
+    @OneToMany(mappedBy = "follower")
+    private List<Follow> followings = new ArrayList<>();
 
     @Embedded
     @AttributeOverrides({
