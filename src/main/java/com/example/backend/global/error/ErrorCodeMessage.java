@@ -36,6 +36,9 @@ public enum ErrorCodeMessage {
     POST_LIKE_FAIL(400, "게시물 좋아요에 실패하였습니다"),
     POST_LIKE_ALREADY_EXISTED(400, "이미 좋아요를 누른 게시물 입니다."),
 
+    // Follow
+    FOLLOW_MYSELF_FAIL(400, "본인은 팔로우 할 수 없습니다."),
+    UNFOLLOW_MYSELF_FAIL(400, "본인을 언팔로우 할 수 없습니다"),
 
     // TODO Status 변환하기
     JWT_REFRESH_TOKEN_EXPIRED(401, "만료된 리프레시 토큰입니다."),
