@@ -28,6 +28,7 @@ public class CommentController {
     private final CommentLikeService commentLikeService;
 
     // 댓글 가져오기
+    @Operation(summary = "댓글 가져오기", description = "포스트에 달린 댓글 모두 가져오기")
     @GetMapping("/api/{postId}/comment")
     public ResponseEntity<ResultResponseDTO> getComments(@PathVariable("postId") Long postId) {
 

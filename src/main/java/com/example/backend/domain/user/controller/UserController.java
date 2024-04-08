@@ -46,6 +46,7 @@ public class UserController {
         return ResponseEntity.ok(ResultResponseDTO.of(ResultCodeMessage.REGISTER_SUCCESS, new UserDTO(registerUser)));
     }
 
+    @Operation(summary = "메뉴용 미니 유저 정보", description = "메뉴에서 사용할 간단한 유저 정보")
     @GetMapping("/api/profile")
     public ResponseEntity<ResultResponseDTO> getMenuResponse() {
 
@@ -113,6 +114,7 @@ public class UserController {
         return ResponseEntity.ok(ResultResponseDTO.of(ResultCodeMessage.USER_PROFILE_IMAGE_REMOVE_SUCCESS));
     }
 
+    @Operation(summary = "토큰 재발급", description = "Refresh 토큰으로 매칭 후 Access 토큰 재발급")
     @PostMapping("/api/reissue")
     public ResponseEntity<ResultResponseDTO> reIssueAccessToken(HttpServletResponse response, String refreshToken) {
 
@@ -126,6 +128,6 @@ public class UserController {
             }
         }
 
-        return ResponseEntity.ok(ResultResponseDTO.of(ResultCodeMessage.ACCESS_TOKEN_UPDATE_SUCCESS));
+        return ResponseEntity.ok(ResultResponseDTO.of(ResultCodeMessage.TOKEN_REISSUE_SUCCESS));
     }
 }
