@@ -27,7 +27,6 @@ public class CommentController {
     private final CommentService commentService;
     private final CommentLikeService commentLikeService;
 
-    // 댓글 가져오기
     @Operation(summary = "댓글 가져오기", description = "포스트에 달린 댓글 모두 가져오기")
     @GetMapping("/api/{postId}/comment")
     public ResponseEntity<ResultResponseDTO> getComments(@PathVariable("postId") Long postId) {
@@ -36,7 +35,6 @@ public class CommentController {
 
         return ResponseEntity.ok(ResultResponseDTO.of(ResultCodeMessage.POST_COMMENT_VIEW_SUCCESS, allCommentByPostId));
     }
-
 
     // TODO Swagger 설정하기
     @Operation(summary = "부모 댓글 작성", description = "댓글 작성")
