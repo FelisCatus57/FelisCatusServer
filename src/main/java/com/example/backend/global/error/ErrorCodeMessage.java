@@ -48,7 +48,6 @@ public enum ErrorCodeMessage {
     // Oauth2
     OAUTH2_INVALID_REQUEST(400, "정상적인 요청이 아닙니다."),
 
-
     // FileConvert
     FILE_IMAGE_TYPE_MISMATCH(400, "파일 확장자가 지원되지 않습니다.");
 
