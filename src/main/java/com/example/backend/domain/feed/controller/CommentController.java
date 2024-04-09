@@ -36,7 +36,6 @@ public class CommentController {
         return ResponseEntity.ok(ResultResponseDTO.of(ResultCodeMessage.POST_COMMENT_VIEW_SUCCESS, allCommentByPostId));
     }
 
-    // TODO Swagger 설정하기
     @Operation(summary = "부모 댓글 작성", description = "댓글 작성")
     @Parameter(name = "postId", description = "게시글 번호", required = true)
     @ApiResponse(responseCode = "200", description = "댓글 작성 성공", content = @Content(schema = @Schema(implementation = CommentResponse.class)))
