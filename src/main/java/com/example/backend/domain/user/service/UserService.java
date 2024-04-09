@@ -162,4 +162,9 @@ public class UserService {
         return new MiniMenuUserResponse(loginUser);
     }
 
+    @Transactional
+    public void reIssueAccessToken(String nickname, String refreshToken) {
+
+    }
+
 }

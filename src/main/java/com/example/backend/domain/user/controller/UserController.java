@@ -18,7 +18,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -38,8 +37,8 @@ public class UserController {
             @ApiResponse(responseCode = "200", description = "회원가입 성공", content = @Content(schema = @Schema(implementation = UserDTO.class))),
             @ApiResponse(responseCode = "400", description = "회원가입 실패 \t\n 1. 이미 존재하는 회원일 경우 \t\n 2. 아이디가 중복 될 경우 \t\n 3. 닉네임이 중복 될 경우", content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class))),
     })
-    @PostMapping(value = "/signup", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ResultResponseDTO> signUp(@RequestBody @ModelAttribute UserRegisterRequest userRegisterRequest) throws Exception {
+    @PostMapping(value = "/signup")
+    public ResponseEntity<ResultResponseDTO> signUp(@RequestBody UserRegisterRequest userRegisterRequest) throws Exception {
 
         User registerUser = userService.signUp(userRegisterRequest);
 
