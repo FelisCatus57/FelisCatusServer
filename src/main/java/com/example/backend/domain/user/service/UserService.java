@@ -3,6 +3,7 @@ package com.example.backend.domain.user.service;
 import com.example.backend.common.minio.MinioUploader;
 import com.example.backend.domain.feed.dto.PostResponse;
 import com.example.backend.domain.feed.service.PostService;
+import com.example.backend.domain.follow.service.FollowService;
 import com.example.backend.domain.user.Enum.Gender;
 import com.example.backend.domain.user.Enum.Role;
 import com.example.backend.domain.user.dto.MiniMenuUserResponse;
@@ -39,6 +40,7 @@ public class UserService {
     private final PostService postService;
     private final MinioUploader minioUploader;
     private final JwtService jwtService;
+    private final FollowService followService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
 
@@ -86,7 +88,10 @@ public class UserService {
         User findUser = userRepository.findByNickname(nickname).orElseThrow(
                 () -> new UserNotExistedException());
 
-        UserProfileResponse userProfileResponse = new UserProfileResponse(findUser, myPost);
+        Long followerCount = followService.getFollowerCount(loginUser.getId());
+        Long followingCount = followService.getFollowingCount(loginUser.getId());
+
+        UserProfileResponse userProfileResponse = new UserProfileResponse(findUser, myPost, followerCount, followingCount);
 
         if (loginUser.getId().equals(findUser.getId())) {
             userProfileResponse.setMe(true);
