@@ -102,4 +102,12 @@ public class FollowService {
 
         return res;
     }
+
+    public Long getFollowerCount(Long followerId) {
+        return followRepository.countAllByFollowingId(followerId);
+    }
+
+    public Long getFollowingCount(Long followingId) {
+        return followRepository.countAllByFollowerId(followingId);
+    }
 }
