@@ -10,16 +10,16 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-@Schema(name = "팔로우용 미니 유저 응답")
+@Schema(description = "팔로우용 미니 유저 응답")
 public class FollowUserMiniResponse {
 
-    @Schema(name = "유저 번호")
+    @Schema(description = "유저 번호")
     private Long userId;
 
-    @Schema(name = "유저 닉네임")
+    @Schema(description = "유저 닉네임")
     private String nickname;
 
-    @Schema(name = "유저 프로필 사진 경로")
+    @Schema(description = "유저 프로필 사진 경로")
     private String profileImgUrl;
 
     public FollowUserMiniResponse(User user) {

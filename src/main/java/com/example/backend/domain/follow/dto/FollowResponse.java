@@ -10,10 +10,10 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-@Schema(name = "팔로우 응답")
+@Schema(description = "팔로우 응답")
 public class FollowResponse {
 
-    @Schema(name = "팔로우 번호")
+    @Schema(description = "팔로우 번호")
     private Long followId;
 
     public FollowResponse(Follow follow) {
