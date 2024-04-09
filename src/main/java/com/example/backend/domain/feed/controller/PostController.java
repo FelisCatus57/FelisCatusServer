@@ -16,24 +16,23 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @ResponseBody
 @RestController
 @RequiredArgsConstructor
-@Tag(name = "POST", description = "게시물 API")
+@Tag(name = "Post", description = "게시물 API")
 public class PostController {
 
     private final PostService postService;
     private final PostLikeService postLikeService;
 
-    @Operation(summary = "게시물 작성", description = "[form-data 형식] content: 내용 / files: 이미지 (여러장 가능)")
+    @Operation(summary = "게시물 작성", description = "[form-data 형식] content: 내용 / files: 이미지 (여러장 가능) [ 이미지 확장자 지원 : \"PNG\" , \"JPG\"]")
     @ApiResponses({
         @ApiResponse(responseCode = "200", description = "게시글 작성 성공", content = @Content(schema = @Schema(implementation = PostUploadResponse.class)))
     })
-    @PostMapping(path = "/api/post", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(path = "/api/post")
     public ResponseEntity<ResultResponseDTO> uploadPost(@ModelAttribute PostUploadRequest postUploadRequest) {
 
         PostUploadResponse postUploadResponse = postService.postUpload(postUploadRequest);
