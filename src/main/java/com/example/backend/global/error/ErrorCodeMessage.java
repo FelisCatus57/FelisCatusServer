@@ -20,6 +20,7 @@ public enum ErrorCodeMessage {
     PASSWORD_NOT_MATCH(401, "비밀번호가 일치하지 않습니다."),
     ACCOUNT_MISMATCH(401,  "회원 정보가 일치하지 않습니다."),
     AUTHORITY_INVALID(403,  "권한이 없습니다."),
+    USER_SEARCH_FAIL(400, "검색된 유저가 존재하지 않습니다."),
 
     // Post
     POST_NOT_FOUND(400, "존재하지 않는 포스트 입니다."),

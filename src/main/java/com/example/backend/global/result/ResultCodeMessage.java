@@ -42,6 +42,8 @@ public enum ResultCodeMessage {
     FOLLOW_SUCCESS(200, "팔로우에 성공하였습니다."),
     UNFOLLOW_SUCCESS(200, "언팔로우에 성공하였습니다."),
 
+    USER_SEARCH_SUCCESS(200, "유저 검색에 성공하였습니다."),
+
     TOKEN_REISSUE_SUCCESS(200, "Access 토큰 재발급에 성공하였습니다.");
 //    ACCESS_TOKEN_UPDATE_SUCCESS(200, "액세스 토큰이 재발급 되었습니다.");
 //    ACCESS_TOKEN_NOT_EXPIRED(200, "액세스 토큰이 만료되지 않았습니다.");
