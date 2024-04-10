@@ -75,21 +75,31 @@ public class CommentService {
         commentRepository.delete(findComment);
     }
 
-    public List<CommentResponse> getAllCommentByPostId(Long postId) {
+    public List<CommentResponse> getAllParentCommentByPostId(Long postId) {
 
         List<CommentResponse> commentResponses = new ArrayList<>();
 
         List<Comment> allByPostId = commentRepository.findAllByPostId(postId);
 
         allByPostId.forEach(
-                comment -> commentResponses.add(new CommentResponse(comment))
+//                comment -> commentResponses.add(new CommentResponse(comment))
+                comment -> {
+                    if (comment.getParent() == null) {
+                        commentResponses.add(new CommentResponse(comment));
+                    }
+                }
         );
+
 
         return commentResponses;
     }
 
+//    public Long getPostParentCommentCount(Long postId) {
+//        return commentRepository.countAllByPostIdAndParentIsNull(postId);
+//    }
+
     public Long getPostCommentCount(Long postId) {
-        return commentRepository.countAllByPostId(postId);
+        return commentRepository.countAllByPostIdAndParentIsNull(postId);
     }
 
     private Comment getComment(Long commentId) {

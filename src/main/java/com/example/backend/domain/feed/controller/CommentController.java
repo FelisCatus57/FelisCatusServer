@@ -31,7 +31,7 @@ public class CommentController {
     @GetMapping("/api/{postId}/comment")
     public ResponseEntity<ResultResponseDTO> getComments(@PathVariable("postId") Long postId) {
 
-        List<CommentResponse> allCommentByPostId = commentService.getAllCommentByPostId(postId);
+        List<CommentResponse> allCommentByPostId = commentService.getAllParentCommentByPostId(postId);
 
         return ResponseEntity.ok(ResultResponseDTO.of(ResultCodeMessage.POST_COMMENT_VIEW_SUCCESS, allCommentByPostId));
     }
