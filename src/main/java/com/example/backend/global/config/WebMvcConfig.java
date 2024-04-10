@@ -15,7 +15,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .allowedOriginPatterns("*")
                 .allowedMethods("*")
                 .allowedHeaders("*")
-                .exposedHeaders("Authorization", "Authorization-refresh")
+                .exposedHeaders("Authorization", "Authorization-refresh","Set-Cookie")
                 .allowCredentials(true)
                 .maxAge(3600);
     }

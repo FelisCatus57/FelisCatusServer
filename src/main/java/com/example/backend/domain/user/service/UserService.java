@@ -3,16 +3,17 @@ package com.example.backend.domain.user.service;
 import com.example.backend.common.minio.MinioUploader;
 import com.example.backend.domain.feed.dto.PostResponse;
 import com.example.backend.domain.feed.service.PostService;
+import com.example.backend.domain.follow.service.FollowService;
 import com.example.backend.domain.user.Enum.Gender;
 import com.example.backend.domain.user.Enum.Role;
-import com.example.backend.domain.user.dto.UserProfileEditRequest;
-import com.example.backend.domain.user.dto.UserProfileResponse;
-import com.example.backend.domain.user.dto.UserRegisterRequest;
+import com.example.backend.domain.user.dto.*;
 import com.example.backend.domain.user.entity.User;
 import com.example.backend.domain.user.exception.NicknameAlreadyExistedException;
+import com.example.backend.domain.user.exception.UserCantSearchException;
 import com.example.backend.domain.user.exception.UserNotExistedException;
 import com.example.backend.domain.user.exception.UsernameAlreadyExistedException;
 import com.example.backend.domain.user.repository.UserRepository;
+import com.example.backend.global.authorization.jwt.service.JwtService;
 import com.example.backend.global.image.Image;
 import com.example.backend.global.image.ImageType;
 import com.example.backend.global.util.AuthUtil;
@@ -22,6 +23,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -36,6 +38,8 @@ public class UserService {
     private final UserRepository userRepository;
     private final PostService postService;
     private final MinioUploader minioUploader;
+    private final JwtService jwtService;
+    private final FollowService followService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
 
@@ -83,7 +87,10 @@ public class UserService {
         User findUser = userRepository.findByNickname(nickname).orElseThrow(
                 () -> new UserNotExistedException());
 
-        UserProfileResponse userProfileResponse = new UserProfileResponse(findUser, myPost);
+        Long followerCount = followService.getFollowerCount(loginUser.getId());
+        Long followingCount = followService.getFollowingCount(loginUser.getId());
+
+        UserProfileResponse userProfileResponse = new UserProfileResponse(findUser, myPost, followerCount, followingCount);
 
         if (loginUser.getId().equals(findUser.getId())) {
             userProfileResponse.setMe(true);
@@ -112,16 +119,13 @@ public class UserService {
 
         User loginUser = authUtil.getLoginUser();
 
-        loginUser.updateIntroduce(userProfileEditRequest.getIntroduce());
-        loginUser.updateWebsite(userProfileEditRequest.getWebsite());
+        loginUser.updateIntroduce(userProfileEditRequest.getIntroduce().isEmpty() ? loginUser.getIntroduce() : userProfileEditRequest.getIntroduce());
+        loginUser.updateWebsite(userProfileEditRequest.getWebsite().isEmpty() ? loginUser.getWebsite() : userProfileEditRequest.getWebsite());
+        loginUser.updatePhoneNo(userProfileEditRequest.getPhoneNo().isEmpty() ? loginUser.getPhoneNo() : userProfileEditRequest.getPhoneNo());
 
         Gender gender = userProfileEditRequest.getGender();
 
-        if (gender == null) {
-            loginUser.updateGender(loginUser.getGender());
-        } else {
-            loginUser.updateGender(gender);
-        }
+        loginUser.updateGender(userProfileEditRequest.getGender() == null ? loginUser.getGender() : gender);
 
         userRepository.save(loginUser);
 
@@ -154,5 +158,32 @@ public class UserService {
         loginUser.resetImage();
         userRepository.save(loginUser);
     }
+
+    public MiniMenuUserResponse getMiniMenuUser() {
+
+        User loginUser = authUtil.getLoginUser();
+
+        return new MiniMenuUserResponse(loginUser);
+    }
+
+    @Transactional
+    public List<SearchUserMiniResponse> searchUser(String keyword) {
+
+        List<SearchUserMiniResponse> findUserList = new ArrayList<>();
+
+        List<User> users = userRepository.findUserByNicknameContaining(keyword).orElseThrow(
+                () -> new UserCantSearchException());
+
+        users.forEach(
+                user -> findUserList.add(new SearchUserMiniResponse(user))
+        );
+
+        return findUserList;
+    }
+
+//    @Transactional
+//    public void reIssueAccessToken(String nickname, String refreshToken) {
+//
+//    }
 
 }

@@ -5,10 +5,12 @@ import com.example.backend.domain.user.entity.User;
 import com.example.backend.global.image.Image;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Data
+@NoArgsConstructor
 @Schema(description = "회원 조회 응답 DTO")
 public class UserProfileResponse {
 
@@ -33,16 +35,16 @@ public class UserProfileResponse {
     @Schema(description = "유저 게시글 수")
     private Long UserPostCount;
 
-//    @Schema(description = "유저 팔로워 수")
-//    private Long UserFollowerCount;
-//
-//    @Schema(description = "유저 팔로우 수")
-//    private Long UserFollowCount;
+    @Schema(description = "유저 팔로워 수")
+    private Long UserFollowerCount;
+
+    @Schema(description = "유저 팔로우 수")
+    private Long UserFollowCount;
 
     @Schema(description = "유저 게시글")
     private List<PostResponse> userPost;
 
-    public UserProfileResponse(User user, List<PostResponse> posts) {
+    public UserProfileResponse(User user, List<PostResponse> posts, Long followerCount, Long followingCount) {
         this.UserNickname = user.getNickname();
         this.UserRealName = user.getName();
         this.isMe = false;
@@ -50,6 +52,8 @@ public class UserProfileResponse {
         this.UserIntroduce = user.getIntroduce();
         this.UserWebsite = user.getWebsite();
         this.userPost = posts;
+        this.UserFollowerCount = followerCount;
+        this.UserFollowCount = followingCount;
     }
 
 }

@@ -1,5 +1,8 @@
 package com.example.backend.global.authorization.login.handler;
 
+import com.example.backend.global.error.ErrorCodeMessage;
+import com.example.backend.global.result.ResultResponseDTO;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -17,9 +20,13 @@ public class LoginFailureHandler extends SimpleUrlAuthenticationFailureHandler {
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
                                         AuthenticationException exception) throws IOException {
         response.setStatus(HttpServletResponse.SC_BAD_REQUEST); // 상태를 400 BadRequest 상태로 설정한다.
-        response.setCharacterEncoding("UTF-8"); // 인코딩 형식을 설정한다.
-        response.setContentType("text/plain;charset=UTF-8"); // ContentType 을 설정한다.
-        response.getWriter().write("로그인 실패하였습니다. 아이디나 비밀번호를 확인해주세요.");
         log.info("로그인에 실패했습니다. 메시지 : {}", exception.getMessage());
+
+        ResultResponseDTO resultResponseDTO = new ResultResponseDTO(ErrorCodeMessage.ACCOUNT_MISMATCH, "");
+
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("application/json; charset=UTF-8");
+
+        new ObjectMapper().writeValue(response.getWriter(), resultResponseDTO);
     }
 }

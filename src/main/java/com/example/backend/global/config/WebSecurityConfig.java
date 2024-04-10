@@ -101,9 +101,9 @@ public class WebSecurityConfig {
 
                                 config.setAllowedOriginPatterns(Arrays.asList("http://localhost:3000"));
                                 config.setAllowedMethods(Arrays.asList("*"));
-                                config.setAllowCredentials(true);
                                 config.setAllowedHeaders(Arrays.asList("*"));
-                                config.setExposedHeaders(Arrays.asList("Authorization", "Authorization-refresh"));
+                                config.setExposedHeaders(Arrays.asList("Authorization", "Authorization-refresh", "Set-Cookie"));
+                                config.setAllowCredentials(true);
                                 config.setMaxAge(3600L);
 
 

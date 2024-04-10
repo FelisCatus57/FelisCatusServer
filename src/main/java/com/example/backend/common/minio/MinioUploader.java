@@ -48,7 +48,6 @@ public class MinioUploader {
         return image;
     }
 
-    // TODO Exception 교체
     private String upload(MultipartFile multipartFile, String filename) {
         File localFile = convertMultiToLocal(multipartFile);
         String url = putMinio(localFile, filename);
@@ -56,7 +55,6 @@ public class MinioUploader {
         return url;
     }
 
-    //TODO Exception
     @SneakyThrows
     private String putMinio(File file, String filename) throws FileConvertException{
 
@@ -107,7 +105,7 @@ public class MinioUploader {
         return dir + "/" + UUID + "_" + name + "." + type;
     }
 
-    // TODO 수정해야함 스프링부트가 작동중일 경우 파일 삭제가 안됌; 오류 발생
+    // TODO 수정해야함 스프링부트가 작동중일 경우 파일 삭제가 안됌; 오류 발생 생각 필요
     private void deleteLocalFile(File localFile) {
 
         if (localFile.delete()) {
@@ -119,7 +117,6 @@ public class MinioUploader {
 
 
 
-    // TODO EXCEPTION 교체
     private File convertMultiToLocal(MultipartFile file) {
         try {
 

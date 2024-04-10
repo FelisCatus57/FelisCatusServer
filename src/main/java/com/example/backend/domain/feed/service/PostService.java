@@ -1,10 +1,12 @@
 package com.example.backend.domain.feed.service;
 
+import com.example.backend.domain.feed.dto.PostEditRequest;
 import com.example.backend.domain.feed.dto.PostResponse;
 import com.example.backend.domain.feed.dto.PostUploadRequest;
 import com.example.backend.domain.feed.dto.PostUploadResponse;
 import com.example.backend.domain.feed.entity.Post;
 import com.example.backend.domain.feed.exception.PostCanNotDeleteException;
+import com.example.backend.domain.feed.exception.PostCantUpdateException;
 import com.example.backend.domain.feed.exception.PostNotExistedException;
 import com.example.backend.domain.feed.repository.PostRepository;
 import com.example.backend.domain.user.entity.User;
@@ -99,6 +101,25 @@ public class PostService {
             responses.add(new PostResponse(post, postCommentCount));
         }
         return responses;
+    }
+
+    public PostResponse modifyPost(Long postId, PostEditRequest postEditRequest) {
+
+        Long loginUserId = authUtil.getLoginUserId();
+
+        Post findPost = getPost(postId);
+
+        Long postCommentCount = commentService.getPostCommentCount(postId);
+
+        if (!findPost.getUser().getId().equals(loginUserId)) {
+            new PostCantUpdateException();
+        }
+
+        findPost.updateContent(postEditRequest.getContent().isEmpty() ? findPost.getContent() : postEditRequest.getContent());
+
+        Post save = postRepository.save(findPost);
+
+        return new PostResponse(save, postCommentCount);
     }
 
     public Long getUserPostCount(String nickname) {
