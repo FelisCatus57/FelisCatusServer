@@ -27,7 +27,7 @@ public enum ResultCodeMessage {
     // Comment
     COMMENT_SUCCESS(200, "댓글 작성에 성공하였습니다."),
     COMMENT_DELETE_SUCCESS(200, "댓글 삭제에 성공하였습니다."),
-    POST_COMMENT_VIEW_SUCCESS(200, "게시물에 달린 모든 댓글 조회에 성공하였습니다."),
+    POST_COMMENT_VIEW_SUCCESS(200, "게시물에 달린 부모 댓글 조회에 성공하였습니다."),
 
     COMMENT_LIKE_SUCCESS(200, "댓글 좋아요에 성공하였습니다."),
     COMMENT_UNLIKE_SUCCESS(200, "댓글 좋아요 취소에 성공하였습니다."),
