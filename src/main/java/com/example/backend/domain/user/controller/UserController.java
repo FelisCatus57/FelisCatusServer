@@ -133,6 +133,7 @@ public class UserController {
         return ResponseEntity.ok(ResultResponseDTO.of(ResultCodeMessage.TOKEN_REISSUE_SUCCESS));
     }
 
+    @Operation(summary = "유저 검색", description = "닉네임으로 유저 검색 (닉네임 포함된 문자 검색 가능)")
     @GetMapping("/api/accounts/search")
     public ResponseEntity<ResultResponseDTO> search(@RequestBody Map<String, String> keywordMap) {
 
