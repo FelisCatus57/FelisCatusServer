@@ -22,6 +22,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+import java.util.Map;
+
 @ResponseBody
 @RestController
 @RequiredArgsConstructor
@@ -128,5 +131,13 @@ public class UserController {
         }
 
         return ResponseEntity.ok(ResultResponseDTO.of(ResultCodeMessage.TOKEN_REISSUE_SUCCESS));
+    }
+
+    @GetMapping("/api/accounts/search")
+    public ResponseEntity<ResultResponseDTO> search(@RequestBody Map<String, String> keywordMap) {
+
+        List<SearchUserMiniResponse> findUserList = userService.searchUser(keywordMap.get("keyword"));
+
+        return ResponseEntity.ok(ResultResponseDTO.of(ResultCodeMessage.USER_SEARCH_SUCCESS, findUserList));
     }
 }

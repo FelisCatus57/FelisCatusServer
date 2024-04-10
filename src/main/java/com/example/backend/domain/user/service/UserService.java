@@ -6,12 +6,10 @@ import com.example.backend.domain.feed.service.PostService;
 import com.example.backend.domain.follow.service.FollowService;
 import com.example.backend.domain.user.Enum.Gender;
 import com.example.backend.domain.user.Enum.Role;
-import com.example.backend.domain.user.dto.MiniMenuUserResponse;
-import com.example.backend.domain.user.dto.UserProfileEditRequest;
-import com.example.backend.domain.user.dto.UserProfileResponse;
-import com.example.backend.domain.user.dto.UserRegisterRequest;
+import com.example.backend.domain.user.dto.*;
 import com.example.backend.domain.user.entity.User;
 import com.example.backend.domain.user.exception.NicknameAlreadyExistedException;
+import com.example.backend.domain.user.exception.UserCantSearchException;
 import com.example.backend.domain.user.exception.UserNotExistedException;
 import com.example.backend.domain.user.exception.UsernameAlreadyExistedException;
 import com.example.backend.domain.user.repository.UserRepository;
@@ -25,6 +23,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -168,8 +167,23 @@ public class UserService {
     }
 
     @Transactional
-    public void reIssueAccessToken(String nickname, String refreshToken) {
+    public List<SearchUserMiniResponse> searchUser(String keyword) {
 
+        List<SearchUserMiniResponse> findUserList = new ArrayList<>();
+
+        List<User> users = userRepository.findUserByNicknameContaining(keyword).orElseThrow(
+                () -> new UserCantSearchException());
+
+        users.forEach(
+                user -> findUserList.add(new SearchUserMiniResponse(user))
+        );
+
+        return findUserList;
     }
+
+//    @Transactional
+//    public void reIssueAccessToken(String nickname, String refreshToken) {
+//
+//    }
 
 }
