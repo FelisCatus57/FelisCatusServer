@@ -5,10 +5,12 @@ import com.example.backend.domain.user.entity.User;
 import com.example.backend.global.image.Image;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Data
+@NoArgsConstructor
 @Schema(description = "회원 조회 응답 DTO")
 public class UserProfileResponse {
 
