@@ -1,6 +1,7 @@
 package com.example.backend.domain.story.dto;
 
 
+import com.example.backend.domain.story.entity.Story;
 import com.example.backend.domain.user.entity.User;
 import com.example.backend.global.image.Image;
 import lombok.AllArgsConstructor;
@@ -20,6 +21,10 @@ public class StoryRequest {
     private User user;
     private Image image;
 
-    private List<MultipartFile> files = new ArrayList<>();
-
+    public Story toEntity(){
+        return Story.builder()
+                .user(user)
+                .image(image)
+                .build();
+    }
 }

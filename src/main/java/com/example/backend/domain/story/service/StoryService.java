@@ -17,11 +17,15 @@ public class StoryService {
     private final AuthUtil auth;
     private final StoryRepository storyRepository;
 
-
-    public List<Story> findAll(){
-        return storyRepository.findAll();
+    public  Story findById(Long id) {
+        return storyRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("not found : " + id));
     }
 
+    //전체 스토리 찾기?
+    public List<Story> findAll() {
+        return storyRepository.findAll();
+    }
     //story upload
     public void uploadStory(StoryRequest storyRequest){
         User storyUser = auth.getLoginUser();
@@ -34,7 +38,8 @@ public class StoryService {
         storyRepository.delete(story);
     }
 
+ /*TODO
 
-
+  */
 
 }
