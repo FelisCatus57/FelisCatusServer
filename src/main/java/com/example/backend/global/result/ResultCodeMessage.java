@@ -17,7 +17,7 @@ public enum ResultCodeMessage {
 
     COMMENT_SUCCES(200, "댓글 작성에 성공하였습니다.");
 
-
+    //story
 
     private final int status;
     private final String message;

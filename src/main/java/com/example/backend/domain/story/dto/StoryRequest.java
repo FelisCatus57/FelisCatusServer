@@ -7,10 +7,8 @@ import com.example.backend.global.image.Image;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
-import java.util.List;
+
 
 @AllArgsConstructor
 @NoArgsConstructor

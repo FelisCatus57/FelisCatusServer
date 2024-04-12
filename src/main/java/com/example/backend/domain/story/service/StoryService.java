@@ -38,8 +38,4 @@ public class StoryService {
         storyRepository.delete(story);
     }
 
- /*TODO
-
-  */
-
 }

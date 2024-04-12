@@ -2,15 +2,11 @@ package com.example.backend.domain.story.contorller;
 
 
 import com.example.backend.domain.story.dto.StoryRequest;
-import com.example.backend.domain.story.dto.StoryResponse;
 import com.example.backend.domain.story.entity.Story;
-import com.example.backend.domain.story.repository.StoryRepository;
 import com.example.backend.domain.story.service.StoryService;
 import com.example.backend.global.result.ResultCodeMessage;
 import com.example.backend.global.result.ResultResponseDTO;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

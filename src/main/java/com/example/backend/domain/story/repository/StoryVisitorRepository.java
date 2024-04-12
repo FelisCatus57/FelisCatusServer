@@ -8,5 +8,5 @@ import java.util.List;
 
 
 public interface StoryVisitorRepository extends JpaRepository<StoryVisitor, Long> {
-    List<StoryVisitor> findAllByStoryVisitor (List<StoryVisitor> visitors, User user);
+    List<StoryVisitor> findAllByAndId (List<StoryVisitor> visitors, User user);
 }
