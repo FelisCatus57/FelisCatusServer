@@ -35,6 +35,7 @@ public enum ResultCodeMessage {
     // Like
     POST_LIKE_SUCCESS(200, "게시물 좋아요에 성공하였습니다."),
     POST_UNLIKE_SUCCESS(200, "게시물 좋아요 취소에 성공하였습니다."),
+    GET_POST_LIKE_USER_SUCCESS(200, "게시물 좋아요 유저 목록 조회에 성공하였습니다."),
 
     // Follow
     FOLLOWER_VIEW_SUCCESS(200, "팔로워 조회에 성공하였습니다."),
