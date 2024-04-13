@@ -22,7 +22,7 @@ public class PostLikeUserResponse {
     @Schema(description = "유저 닉네임")
     private String nickname;
 
-    @Schema(description = "유저 이미지 경로")
+    @Schema(description = "유저 이미지 경로    ")
     private String UserProfileUrl;
 
     public PostLikeUserResponse(PostLike postLike) {
