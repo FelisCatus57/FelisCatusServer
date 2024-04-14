@@ -7,4 +7,6 @@ import java.util.List;
 public interface PostQueryRepository {
 
     List<Post> findAllByFollowingPost(String nickname);
+
+    List<Post> findAllByNotFollowingPost(String nickname);
 }

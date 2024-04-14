@@ -32,4 +32,23 @@ public class PostQueryRepositoryImpl implements PostQueryRepository{
 
         return fetch;
     }
+
+    @Override
+    public List<Post> findAllByNotFollowingPost(String nickname) {
+
+        QUser user = QUser.user;
+        QPost post = QPost.post;
+        QFollow follow = QFollow.follow;
+
+        List<Post> fetch = jpaQueryFactory.select(post)
+                .from(post)
+                .innerJoin(follow).on(post.user.id.eq(follow.following.id))
+                .innerJoin(user).on(user.id.eq(follow.follower.id))
+                .where(user.nickname.ne(nickname).and(post.user.nickname.ne(nickname)))
+                .fetch();
+
+        return fetch;
+    }
+
+
 }
