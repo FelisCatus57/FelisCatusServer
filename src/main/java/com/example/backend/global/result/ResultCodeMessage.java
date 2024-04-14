@@ -23,6 +23,8 @@ public enum ResultCodeMessage {
     POST_UPDATE_SUCCESS(200, "게시물 수정에 성공하였습니다."),
     POST_DELETE_SUCCESS(200, "게시물 삭제에 성공하였습니다."),
     USER_POST_VIEW_SUCCESS(200, "유저 게시물 조회에 성공하였습니다."),
+    GET_FOLLOW_USER_POST_SUCCESS(200, "팔로잉 유저 포스트 조회에 성공하였습니다."),
+    GET_NOT_FOLLOW_USER_POST_SUCCESS(200, "팔로잉 하지 않은 유저 포스트 조회에 성공하였습니다."),
 
     // Comment
     COMMENT_SUCCESS(200, "댓글 작성에 성공하였습니다."),
