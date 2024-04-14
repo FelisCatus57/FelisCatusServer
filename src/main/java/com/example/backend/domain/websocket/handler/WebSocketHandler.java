@@ -85,7 +85,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
     }
 
     private void sendMessageToChatRoom(ChatMessageDTO chatMessageDto, Set<WebSocketSession> chatRoomSession) {
-        chatRoomSession.parallelStream().forEach(sess -> sendMessage(sess, chatRoomSession));
+        chatRoomSession.parallelStream().forEach(sess -> sendMessage(sess, chatMessageDto));
     }
 
     public <T> void sendMessage(WebSocketSession session, T message) {
