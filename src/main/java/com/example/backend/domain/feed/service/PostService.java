@@ -150,6 +150,22 @@ public class PostService {
         return responses;
     }
 
+    public List<PostResponse> getUserNotFollowingPost() {
+
+        String loginUserNickname = authUtil.getLoginUserNickname();
+
+        List<PostResponse> responses = new ArrayList<>();
+        List<Post> posts = postRepository.findAllByNotFollowingPost(loginUserNickname);
+
+        posts.forEach(
+                post -> {
+                    Long postCommentCount = commentService.getPostCommentCount(post.getId());
+                    responses.add(new PostResponse(post, postCommentCount));
+                }
+        );
+        return responses;
+    }
+
     public List<PostLikeUserResponse> getPostLikeUser(Long postId) {
         List<PostLikeUserResponse> responses = new ArrayList<>();
 

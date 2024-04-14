@@ -90,14 +90,23 @@ public class PostController {
         return ResponseEntity.ok(ResultResponseDTO.of(ResultCodeMessage.GET_POST_LIKE_USER_SUCCESS,postLikeUser));
     }
 
-//    @Operation(summary = "내가 팔로우 한 유저 포스트", description = "내가 팔로우한 유저 포스트")
-//    @GetMapping("/api/followingPost")
-//    public ResponseEntity<ResultResponseDTO> postView() {
-//
-//        List<PostResponse> userFollowingPost = postService.getUserFollowingPost();
-//
-//        return ResponseEntity.ok(ResultResponseDTO.of(ResultCodeMessage.FOLLOWING_VIEW_SUCCESS, userFollowingPost));
-//    }
+    @Operation(summary = "내가 팔로우 한 유저 포스트", description = "내가 팔로우한 유저 포스트만 가져오기")
+    @GetMapping("/api/followingPost")
+    public ResponseEntity<ResultResponseDTO> postView() {
+
+        List<PostResponse> userFollowingPost = postService.getUserFollowingPost();
+
+        return ResponseEntity.ok(ResultResponseDTO.of(ResultCodeMessage.GET_FOLLOW_USER_POST_SUCCESS, userFollowingPost));
+    }
+
+    @Operation(summary = "내가 팔로우 하지 않은 유저 포스트", description = "내가 팔로우 하지 않은 유저 포스트만 가져오기")
+    @GetMapping("/api/explorePost")
+    public ResponseEntity<ResultResponseDTO> exploreView() {
+
+        List<PostResponse> userNotFollowingPost = postService.getUserNotFollowingPost();
+
+        return ResponseEntity.ok(ResultResponseDTO.of(ResultCodeMessage.GET_NOT_FOLLOW_USER_POST_SUCCESS, userNotFollowingPost));
+    }
 
 //    @Operation(summary = "게시물 가져오기", description = "해당 유저가 작성한 게시물 모두 가져오기")
 //    @GetMapping("/api/post/{nickname}")
