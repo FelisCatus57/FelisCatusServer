@@ -28,7 +28,17 @@ public class PostQueryRepositoryImpl implements PostQueryRepository{
                 .innerJoin(follow).on(post.user.id.eq(follow.following.id))
                 .innerJoin(user).on(user.id.eq(follow.follower.id))
                 .where(user.nickname.eq(nickname))
+//                .offset()
+//                .limit()
                 .fetch();
+
+
+        Long cnt = jpaQueryFactory.select(post.count())
+                .from(post)
+                .innerJoin(follow).on(post.user.id.eq(follow.following.id))
+                .innerJoin(user).on(user.id.eq(follow.follower.id))
+                .where(user.nickname.eq(nickname))
+                .fetchOne();
 
         return fetch;
     }
@@ -45,7 +55,10 @@ public class PostQueryRepositoryImpl implements PostQueryRepository{
                 .innerJoin(follow).on(post.user.id.eq(follow.following.id))
                 .innerJoin(user).on(user.id.eq(follow.follower.id))
                 .where(user.nickname.ne(nickname).and(post.user.nickname.ne(nickname)))
+//                .offset()
+//                .limit()
                 .fetch();
+
 
         return fetch;
     }
