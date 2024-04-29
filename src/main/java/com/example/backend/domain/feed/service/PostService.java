@@ -1,13 +1,13 @@
 package com.example.backend.domain.feed.service;
 
-import com.example.backend.domain.feed.dto.PostEditRequest;
-import com.example.backend.domain.feed.dto.PostResponse;
-import com.example.backend.domain.feed.dto.PostUploadRequest;
-import com.example.backend.domain.feed.dto.PostUploadResponse;
+import com.example.backend.domain.feed.dto.*;
 import com.example.backend.domain.feed.entity.Post;
+import com.example.backend.domain.feed.entity.PostLike;
 import com.example.backend.domain.feed.exception.PostCanNotDeleteException;
 import com.example.backend.domain.feed.exception.PostCantUpdateException;
 import com.example.backend.domain.feed.exception.PostNotExistedException;
+import com.example.backend.domain.feed.repository.CommentRepository;
+import com.example.backend.domain.feed.repository.PostLikeRepository;
 import com.example.backend.domain.feed.repository.PostRepository;
 import com.example.backend.domain.user.entity.User;
 import com.example.backend.global.util.AuthUtil;
@@ -26,6 +26,8 @@ public class PostService {
     private final PostImageService postImageService;
     private final PostRepository postRepository;
     private final CommentService commentService;
+    private final PostLikeRepository postLikeRepository;
+    private final CommentRepository commentRepository;
 
 
     // 게시물 업로드
@@ -126,6 +128,57 @@ public class PostService {
         return postRepository.countAllByUserNickname(nickname);
     }
 
+    public void getFollowUserPost(Long followingId) {
+        User loginUser = authUtil.getLoginUser();
+        
+    }
+
+
+    public List<PostResponse> getUserFollowingPost() {
+
+        String loginUserNickname = authUtil.getLoginUserNickname();
+
+        List<PostResponse> responses = new ArrayList<>();
+        List<Post> posts = postRepository.findAllByFollowingPost(loginUserNickname);
+
+        posts.forEach(
+                post -> {
+                    Long postCommentCount = commentService.getPostCommentCount(post.getId());
+                    responses.add(new PostResponse(post, postCommentCount));
+                }
+        );
+        return responses;
+    }
+
+    public List<PostResponse> getUserNotFollowingPost() {
+
+        String loginUserNickname = authUtil.getLoginUserNickname();
+
+        List<PostResponse> responses = new ArrayList<>();
+        List<Post> posts = postRepository.findAllByNotFollowingPost(loginUserNickname);
+
+        posts.forEach(
+                post -> {
+                    Long postCommentCount = commentService.getPostCommentCount(post.getId());
+                    responses.add(new PostResponse(post, postCommentCount));
+                }
+        );
+        return responses;
+    }
+
+    public List<PostLikeUserResponse> getPostLikeUser(Long postId) {
+        List<PostLikeUserResponse> responses = new ArrayList<>();
+
+        List<PostLike> likes = postLikeRepository.findByPostId(postId);
+
+        likes.forEach(
+                like -> {
+                    responses.add(new PostLikeUserResponse(like));
+                }
+        );
+
+        return responses;
+    }
 
 
 }

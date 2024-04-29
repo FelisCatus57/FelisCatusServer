@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import java.util.Map;
 
 @ResponseBody
 @RestController
@@ -135,9 +134,9 @@ public class UserController {
 
     @Operation(summary = "유저 검색", description = "닉네임으로 유저 검색 (닉네임 포함된 문자 검색 가능)")
     @GetMapping("/api/accounts/search")
-    public ResponseEntity<ResultResponseDTO> search(@RequestBody Map<String, String> keywordMap) {
+    public ResponseEntity<ResultResponseDTO> search(@RequestParam("keyword") String keyword) {
 
-        List<SearchUserMiniResponse> findUserList = userService.searchUser(keywordMap.get("keyword"));
+        List<SearchUserMiniResponse> findUserList = userService.searchUser(keyword);
 
         return ResponseEntity.ok(ResultResponseDTO.of(ResultCodeMessage.USER_SEARCH_SUCCESS, findUserList));
     }

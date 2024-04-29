@@ -60,8 +60,8 @@ public class User extends BaseTimeEntity {
     @Column(length = 50)
     private String website; // 웹사이트
 
-    // TODO mappedBy 채우기
     @OneToMany(mappedBy = "follower")
+    @Builder.Default
     private List<Follow> followings = new ArrayList<>();
 
     @Embedded

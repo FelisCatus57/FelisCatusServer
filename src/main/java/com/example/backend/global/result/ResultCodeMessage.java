@@ -23,11 +23,13 @@ public enum ResultCodeMessage {
     POST_UPDATE_SUCCESS(200, "게시물 수정에 성공하였습니다."),
     POST_DELETE_SUCCESS(200, "게시물 삭제에 성공하였습니다."),
     USER_POST_VIEW_SUCCESS(200, "유저 게시물 조회에 성공하였습니다."),
+    GET_FOLLOW_USER_POST_SUCCESS(200, "팔로잉 유저 포스트 조회에 성공하였습니다."),
+    GET_NOT_FOLLOW_USER_POST_SUCCESS(200, "팔로잉 하지 않은 유저 포스트 조회에 성공하였습니다."),
 
     // Comment
     COMMENT_SUCCESS(200, "댓글 작성에 성공하였습니다."),
     COMMENT_DELETE_SUCCESS(200, "댓글 삭제에 성공하였습니다."),
-    POST_COMMENT_VIEW_SUCCESS(200, "게시물에 달린 모든 댓글 조회에 성공하였습니다."),
+    POST_COMMENT_VIEW_SUCCESS(200, "게시물에 달린 부모 댓글 조회에 성공하였습니다."),
 
     COMMENT_LIKE_SUCCESS(200, "댓글 좋아요에 성공하였습니다."),
     COMMENT_UNLIKE_SUCCESS(200, "댓글 좋아요 취소에 성공하였습니다."),
@@ -35,6 +37,7 @@ public enum ResultCodeMessage {
     // Like
     POST_LIKE_SUCCESS(200, "게시물 좋아요에 성공하였습니다."),
     POST_UNLIKE_SUCCESS(200, "게시물 좋아요 취소에 성공하였습니다."),
+    GET_POST_LIKE_USER_SUCCESS(200, "게시물 좋아요 유저 목록 조회에 성공하였습니다."),
 
     // Follow
     FOLLOWER_VIEW_SUCCESS(200, "팔로워 조회에 성공하였습니다."),

@@ -17,3 +17,9 @@ spring:
       hibernate:
         format_sql: true
         show_sql: true
+
+#  data:
+#    web:
+#      pageable:
+#        default-page-size: 10
+#        one-indexed-parameters: true
