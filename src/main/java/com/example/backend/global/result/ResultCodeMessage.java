@@ -34,6 +34,10 @@ public enum ResultCodeMessage {
     COMMENT_LIKE_SUCCESS(200, "댓글 좋아요에 성공하였습니다."),
     COMMENT_UNLIKE_SUCCESS(200, "댓글 좋아요 취소에 성공하였습니다."),
 
+    // Story
+    STORY_SUCCESS(200, "스토리 업로드에 성공하였습니다."),
+    STORY_DELETE_SUCCESS(200, "스토리 삭제에 성공하였습니다."),
+
     // Like
     POST_LIKE_SUCCESS(200, "게시물 좋아요에 성공하였습니다."),
     POST_UNLIKE_SUCCESS(200, "게시물 좋아요 취소에 성공하였습니다."),
