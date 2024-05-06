@@ -86,7 +86,7 @@ public class StoryService {
                     LocalDateTime now = LocalDateTime.now();
                     LocalDateTime end = parse.plusDays(1);
 
-                    if (now.isBefore(end)) {
+                    if ( now.isAfter(parse) && now.isBefore(end)) {
                         storyViews.add(new StoryView(story));
                     }
                 });
