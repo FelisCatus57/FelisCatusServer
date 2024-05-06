@@ -83,9 +83,10 @@ public class StoryService {
                 .forEach( story -> {
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 HH:mm:ss");
                     LocalDateTime parse = LocalDateTime.parse(story.getCreatedDate(), formatter);
+                    LocalDateTime now = LocalDateTime.now();
                     LocalDateTime end = parse.plusDays(1);
 
-                    if ( parse.isBefore(end)) {
+                    if (now.isBefore(end)) {
                         storyViews.add(new StoryView(story));
                     }
                 });
