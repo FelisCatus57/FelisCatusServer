@@ -23,7 +23,7 @@ public class StoryView {
 
     @Schema(description = "스토리 수정일")
     private String modifiedDate;
-    
+
     public StoryView(Story story) {
         this.id = story.getId();
         this.storyImageUrl = story.getImage().getImageUrl();
