@@ -18,7 +18,7 @@ public class StoryController {
 
     private final StoryService storyService;
 
-    @PostMapping("/api/story")
+    @PostMapping("/api/stories")
     public ResponseEntity<ResultResponseDTO> uploadStory(@ModelAttribute StoryUploadRequest storyUploadRequest) {
 
         StoryUploadResponse storyUploadResponse = storyService.storyUpload(storyUploadRequest);
@@ -26,7 +26,7 @@ public class StoryController {
         return ResponseEntity.ok(ResultResponseDTO.of(ResultCodeMessage.STORY_SUCCESS, storyUploadResponse));
     }
 
-    @DeleteMapping("/api/story/{storyId}")
+    @DeleteMapping("/api/stories/{storyId}")
     public ResponseEntity<ResultResponseDTO> deleteStory(@PathVariable("storyId") Long storyId) {
 
         storyService.deleteStory(storyId);
@@ -34,10 +34,10 @@ public class StoryController {
         return ResponseEntity.ok(ResultResponseDTO.of(ResultCodeMessage.STORY_DELETE_SUCCESS, storyId));
     }
 
-    @GetMapping("/api/story")
-    public ResponseEntity<ResultResponseDTO> getStory() {
+    @GetMapping("/api/{userId}/stories")
+    public ResponseEntity<ResultResponseDTO> getStory(@PathVariable("memberId") Long userId) {
 
-        List<StoryView> storyViews = storyService.storyView();
+        List<StoryView> storyViews = storyService.storyView(userId);
 
         return ResponseEntity.ok(ResultResponseDTO.of(ResultCodeMessage.STORY_VIEW_SUCCESS, storyViews));
     }

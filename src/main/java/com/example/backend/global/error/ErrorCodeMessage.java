@@ -35,6 +35,7 @@ public enum ErrorCodeMessage {
     
     //Story
     STORY_NOT_FOUND(400, "존재하지 않는 스토리 입니다."),
+    STORY_USER_NOT_EXISTED(400, "해당 유저가 작성한 스토리가 존재하지 않습니다."),
     STORY_USER_DELETE_FAIL(400, "작성자만 삭제 가능한 스토리입니다."),
     // Like
     POST_LIKE_FAIL(400, "게시물 좋아요에 실패하였습니다"),

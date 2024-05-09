@@ -1,5 +1,6 @@
 package com.example.backend.domain.story.service;
 
+import com.example.backend.domain.story.dto.StoryViewUserResponse;
 import com.example.backend.domain.story.entity.Story;
 import com.example.backend.domain.story.entity.StoryViewUser;
 import com.example.backend.domain.story.repository.StoryViewUserRepository;
@@ -7,6 +8,7 @@ import com.example.backend.domain.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -22,20 +24,17 @@ public class StoryViewUserService {
     }
 
     //TODO 조회 부분 수정하기
+    public List<StoryViewUserResponse> getStoryViewWithStory(Story story) {
 
-    // 조회
-    public List<StoryViewUser> getStoryViewWithUser(User user) {
-        return storyViewUserRepository.findAllByUser(user);
-    }
+        List<StoryViewUserResponse> res = new ArrayList<>();
 
-    // 조회 2
-    public List<StoryViewUser> getStoryViewWithStory(Story story) {
-        return storyViewUserRepository.findAllByStory(story);
-    }
+        List<StoryViewUser> findAll = storyViewUserRepository.findAllByStory(story);
 
-    // 조회 3
-    public List<StoryViewUser> getStoryViewWithUserAndStory(Story story, User user) {
-        return storyViewUserRepository.findAllByStoryAndUser(story, user);
+        findAll.stream().forEach(
+                storyViewUser -> {
+                    res.add(new StoryViewUserResponse(storyViewUser));
+                });
+        return res;
     }
 
 }

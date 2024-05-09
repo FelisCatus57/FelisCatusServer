@@ -9,6 +9,7 @@ import com.example.backend.domain.story.dto.StoryView;
 import com.example.backend.domain.story.entity.Story;
 import com.example.backend.domain.story.exception.StoryCanNotDeleteException;
 import com.example.backend.domain.story.exception.StoryNotExistException;
+import com.example.backend.domain.story.exception.UserStoryNotExistedException;
 import com.example.backend.domain.story.repository.StoryRepository;
 import com.example.backend.domain.user.entity.User;
 import com.example.backend.domain.user.exception.UserNotExistedException;
@@ -73,29 +74,57 @@ public class StoryService {
         storyRepository.delete(story);
     }
 
-    // 가져오기 (팔로우 유저만)
     @Transactional
-    public List<StoryView> storyView() {
+    public List<StoryView> storyView(Long userId) {
 
-        // 내가 반환 해야하는 팔로잉 목록유저들의 스토리
-        List<StoryView> storyViews = new ArrayList<>();
+        List<StoryView> views = new ArrayList<>();
 
-        User loginUser = authUtil.getLoginUser();
+        User findUser = userRepository.findById(userId).orElseThrow(
+                () -> new UserNotExistedException());
 
-        followingListStories().stream()
-                .forEach( story -> {
+        List<Story> stories = followingListStories();
+
+        stories.stream().forEach(
+                story -> {
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 HH:mm:ss");
                     LocalDateTime parse = LocalDateTime.parse(story.getCreatedDate(), formatter);
                     LocalDateTime now = LocalDateTime.now();
                     LocalDateTime end = parse.plusDays(1);
-
-                    if ( now.isAfter(parse) && now.isBefore(end)) {
-                        storyViewUserService.addViewUser(story, loginUser);
-                        storyViews.add(new StoryView(story));
+                    if (story.getUser().getId().equals(findUser.getId()) && (now.isAfter(parse) && now.isBefore(end))) {
+                        views.add(new StoryView(story));
                     }
                 });
-        return storyViews;
+
+        if (views.size() == 0) {
+            throw new UserStoryNotExistedException() ;
+        } else {
+            return views;
+        }
     }
+
+    // 가져오기 (팔로우 유저만)
+//    @Transactional
+//    public List<StoryView> storyView(Long userId) {
+//
+//        // 내가 반환 해야하는 팔로잉 목록유저들의 스토리
+//        List<StoryView> storyViews = new ArrayList<>();
+//
+//        User loginUser = authUtil.getLoginUser();
+//
+//        followingListStories().stream()
+//                .forEach( story -> {
+//                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 HH:mm:ss");
+//                    LocalDateTime parse = LocalDateTime.parse(story.getCreatedDate(), formatter);
+//                    LocalDateTime now = LocalDateTime.now();
+//                    LocalDateTime end = parse.plusDays(1);
+//
+//                    if ( now.isAfter(parse) && now.isBefore(end)) {
+//                        storyViewUserService.addViewUser(story, loginUser);
+//                        storyViews.add(new StoryView(story));
+//                    }
+//                });
+//        return storyViews;
+//    }
     
     // 내가 팔로우한 유저들의 스토리 리스트 반환
     private List<Story> followingListStories() {
