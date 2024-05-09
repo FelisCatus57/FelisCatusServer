@@ -31,12 +31,13 @@ public class StoryService {
 
     private static final String MINIO_STORY_DIR = "story";
 
+    private final StoryViewUserService storyViewUserService;
     private final StoryRepository storyRepository;
     private final UserRepository userRepository;
-    private final AuthUtil authUtil;
     private final FollowService followService;
     private final MinioUploader minioUploader;
-    
+    private final AuthUtil authUtil;
+
     // 생성
     @Transactional
     public StoryUploadResponse storyUpload(StoryUploadRequest storyUploadRequest) {
@@ -79,6 +80,8 @@ public class StoryService {
         // 내가 반환 해야하는 팔로잉 목록유저들의 스토리
         List<StoryView> storyViews = new ArrayList<>();
 
+        User loginUser = authUtil.getLoginUser();
+
         followingListStories().stream()
                 .forEach( story -> {
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 HH:mm:ss");
@@ -87,6 +90,7 @@ public class StoryService {
                     LocalDateTime end = parse.plusDays(1);
 
                     if ( now.isAfter(parse) && now.isBefore(end)) {
+                        storyViewUserService.addViewUser(story, loginUser);
                         storyViews.add(new StoryView(story));
                     }
                 });
