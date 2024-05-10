@@ -34,10 +34,10 @@ public class StoryController {
         return ResponseEntity.ok(ResultResponseDTO.of(ResultCodeMessage.STORY_DELETE_SUCCESS, storyId));
     }
 
-    @GetMapping("/api/{userId}/stories")
-    public ResponseEntity<ResultResponseDTO> getStory(@PathVariable("memberId") Long userId) {
+    @GetMapping("/api/stories")
+    public ResponseEntity<ResultResponseDTO> getStory() {
 
-        List<StoryView> storyViews = storyService.storyView(userId);
+        List<StoryView> storyViews = storyService.storyView();
 
         return ResponseEntity.ok(ResultResponseDTO.of(ResultCodeMessage.STORY_VIEW_SUCCESS, storyViews));
     }
