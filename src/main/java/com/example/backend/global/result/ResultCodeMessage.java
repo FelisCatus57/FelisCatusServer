@@ -38,6 +38,8 @@ public enum ResultCodeMessage {
     STORY_SUCCESS(200, "스토리 업로드에 성공하였습니다."),
     STORY_DELETE_SUCCESS(200, "스토리 삭제에 성공하였습니다."),
     STORY_VIEW_SUCCESS(200, "스토리 조회에 성공하였습니다."),
+    STORY_LIST_VIEW_SUCCESS(200, "스토리 유저 목록 조회에 성공하였습니다."),
+    STORY_VIEW_USER_SUCCESS(200, "해당 스토리 읽은 유저 목록 조회에 성공하였습니다."),
 
     // Like
     POST_LIKE_SUCCESS(200, "게시물 좋아요에 성공하였습니다."),
