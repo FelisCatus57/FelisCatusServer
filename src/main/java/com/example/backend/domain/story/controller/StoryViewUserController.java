@@ -27,7 +27,7 @@ public class StoryViewUserController {
     @Operation(summary = "스토리 조회 유저 조회", description = "해당 스토리를 조회한 유저 정보를 조회")
     @Parameter(name = "storyId", description = "스토리 번호", required = true)
     @GetMapping("/api/stories/view/{storyId}")
-    public ResponseEntity<ResultResponseDTO> getViewUserList(@PathVariable("sotryId") Long storyId) {
+    public ResponseEntity<ResultResponseDTO> getViewUserList(@PathVariable("storyId") Long storyId) {
 
         List<StoryViewUserResponse> views = storyViewUserService.getStoryViewWithStory(storyId);
 

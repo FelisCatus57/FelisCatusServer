@@ -122,7 +122,6 @@ public class StoryService {
                     LocalDateTime end = parse.plusDays(1);
 
                     if ( now.isAfter(parse) && now.isBefore(end)) {
-                        // TODO 보면 DB에 한번만 저장 되어야하는데 볼때마다 저장됨 수정!
 
                         if (!storyViewUserRepository.existsByStoryAndUser(story, loginUser)) {
                             storyViewUserService.addViewUser(story, loginUser);

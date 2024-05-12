@@ -9,13 +9,8 @@ import java.util.List;
 
 public interface StoryViewUserRepository extends JpaRepository<StoryViewUser, Long> {
 
-    // TODO 조회 Repository 수정
-    
+
     List<StoryViewUser> findAllByStory(Story story);
-
-    List<StoryViewUser> findAllByUser(User user);
-
-    List<StoryViewUser> findAllByStoryAndUser(Story story, User user);
 
     Boolean existsByStoryAndUser(Story story, User user);
 }

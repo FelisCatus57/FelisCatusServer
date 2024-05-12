@@ -9,6 +9,7 @@ import com.example.backend.domain.story.repository.StoryViewUserRepository;
 import com.example.backend.domain.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,8 +27,7 @@ public class StoryViewUserService {
         storyViewUserRepository.save(storyViewUser);
     }
 
-    //TODO 조회 부분 수정하기
-    // 스토리 번호를 조회하여 해당 스토리를 조회한 유저를 가져와 반환
+    @Transactional
     public List<StoryViewUserResponse> getStoryViewWithStory(Long storyId) {
 
         List<StoryViewUserResponse> res = new ArrayList<>();
