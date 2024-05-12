@@ -16,4 +16,6 @@ public interface StoryViewUserRepository extends JpaRepository<StoryViewUser, Lo
     List<StoryViewUser> findAllByUser(User user);
 
     List<StoryViewUser> findAllByStoryAndUser(Story story, User user);
+
+    Boolean existsByStoryAndUser(Story story, User user);
 }

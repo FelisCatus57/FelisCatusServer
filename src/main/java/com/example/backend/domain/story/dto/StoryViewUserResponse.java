@@ -15,12 +15,11 @@ public class StoryViewUserResponse {
     @Schema(description = "스토리 조회 유저 정보")
     private MiniMenuUserResponse miniMenuUserResponse;
 
-    @Schema(description = "스토리 조회 시간")
-    private String createDate;
+    @Schema(description = "스토리 조회 유저 수")
+    private Long viewCount;
 
     public StoryViewUserResponse(StoryViewUser storyViewUser) {
         this.id = storyViewUser.getId();
         this.miniMenuUserResponse = new MiniMenuUserResponse(storyViewUser.getUser());
-        this.createDate = storyViewUser.getCreatedDate();
     }
 }

@@ -11,8 +11,8 @@ public interface StoryRepository extends JpaRepository<Story, Long> {
 
     Optional<Story> findById(Long id);
 
-    List<Story> findStoriesByUser(User user);
+    Optional<List<Story>> findStoriesByUser(User user);
 
 //    List<Story> findStoriesByCreatedDateIsBetween(LocalDateTime from, LocalDateTime to);
-
+//    List<Story> findStoriesBy
 }
