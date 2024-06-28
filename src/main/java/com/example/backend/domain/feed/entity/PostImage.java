@@ -2,7 +2,6 @@ package com.example.backend.domain.feed.entity;
 
 import com.example.backend.global.BaseTimeEntity;
 import com.example.backend.global.image.Image;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;

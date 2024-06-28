@@ -6,6 +6,6 @@ import com.example.backend.global.error.exception.CustomException;
 public class JwtRefreshTokenExpiredException extends CustomException {
 
     public JwtRefreshTokenExpiredException() {
-        super(ErrorCodeMessage.JWT_REFRESHTOKEN_EXPIRED);
+        super(ErrorCodeMessage.JWT_REFRESH_TOKEN_EXPIRED);
     }
 }

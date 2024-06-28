@@ -2,6 +2,7 @@ package com.example.backend.global.authorization.jwt.service;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.example.backend.domain.user.entity.User;
 import com.example.backend.domain.user.exception.JwtTokenInvalidException;
 import com.example.backend.domain.user.exception.UserNotExistedException;
 import com.example.backend.domain.user.repository.UserRepository;
@@ -11,6 +12,8 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
+import org.springframework.security.core.authority.mapping.NullAuthoritiesMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -49,6 +52,8 @@ public class JwtService {
     private static final String BEARER = "Bearer ";
 
     private final UserRepository userRepository;
+
+    private GrantedAuthoritiesMapper authoritiesMapper = new NullAuthoritiesMapper();
 
     public String createAccessToken(String username, String nickname) {
         Date now = new Date();
@@ -174,6 +179,25 @@ public class JwtService {
             return false;
             // 유효하지 않으면 로그와 함께 false 반환
         }
+    }
+
+    public void checkRefreshTokenAndReIssueAccessToken(HttpServletResponse response, String refreshToken) {
+        userRepository.findByRefreshToken(refreshToken) // 헤더에서 추출한 RefreshToken 으로  DB 에서 유저를 찾는다.
+                .ifPresent(user -> { // 해당 유저가 존재한다면
+                    String reIssuedRefreshToken = reIssueRefreshToken(user); // RefreshToken 을 재발급 하고 DB 에 저장시킨다.
+                    sendAccessAndRefreshToken(response, createAccessToken(user.getUsername(), user.getNickname()),
+                            // 응답 헤더에 새로 생성한 액세스 / 리프레스 토큰을 보낸다.
+                            reIssuedRefreshToken);
+                });
+    }
+
+    // 리프레시 토큰 재발급 후 DB에 리프레시 토큰 업데이트
+    private String reIssueRefreshToken(User user) {
+        String reIssuedRefreshToken = createRefreshToken(); // 리프레시 토큰을 발급한다.
+        user.updateRefreshToken(reIssuedRefreshToken); // DB 에 재발급된 리프레시 토큰을 업데이트 한다.
+        userRepository.saveAndFlush(user); // 저장시킨다.
+        return reIssuedRefreshToken;
+        // 재발급된 리프레시 토큰을 반환한다.
     }
 }
 

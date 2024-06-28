@@ -4,6 +4,7 @@ import com.example.backend.domain.user.Enum.SocialType;
 import com.example.backend.domain.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long> {
@@ -12,11 +13,13 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findByNickname(String nickname);
 
+    Optional<List<User>> findUserByNicknameContaining(String keyword);
+
     Optional<User> findByRefreshToken(String refreshToken);
 
     boolean existsUserByUsername(String username);
 
-    boolean existsUsersByNickname(String nickname);
+    boolean existsUserByNickname(String nickname);
 
 
     /*

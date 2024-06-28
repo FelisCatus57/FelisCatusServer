@@ -2,7 +2,6 @@ package com.example.backend.domain.feed.entity;
 
 import com.example.backend.domain.user.entity.User;
 import com.example.backend.global.BaseTimeEntity;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -28,19 +27,26 @@ public class Post extends BaseTimeEntity {
     @Lob
     private String content;
 
-    @OneToMany(mappedBy = "post")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
     private List<Comment> comments = new ArrayList<>();
 
     @OneToMany(mappedBy = "post")
     private List<PostImage> images = new ArrayList<>();
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
+    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
+    private List<PostLike> postLikes = new ArrayList<>();
 
     @Builder
     public Post(User user, String content) {
         this.user = user;
+        this.content = content;
+    }
+
+    public void updateContent(String content) {
         this.content = content;
     }
 
