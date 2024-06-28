@@ -2,7 +2,7 @@
 
 ## 목차
 
-- 
+-
 
 ## 백엔드
 
@@ -11,6 +11,10 @@
 -   springBoot : 3.2.2
 -   spring Swagger : 2.1.0
 -   queryDsl : 5.0.0
+
+# ERD
+
+![erd](https://github.com/jxxn92/jxxn92/assets/116718062/d5e4f1c2-346d-404a-b601-483ac3053132)
 
 ## 폴더 구조
 
