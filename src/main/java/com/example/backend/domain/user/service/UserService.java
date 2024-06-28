@@ -13,7 +13,6 @@ import com.example.backend.domain.user.exception.UserCantSearchException;
 import com.example.backend.domain.user.exception.UserNotExistedException;
 import com.example.backend.domain.user.exception.UsernameAlreadyExistedException;
 import com.example.backend.domain.user.repository.UserRepository;
-import com.example.backend.global.authorization.jwt.service.JwtService;
 import com.example.backend.global.image.Image;
 import com.example.backend.global.image.ImageType;
 import com.example.backend.global.util.AuthUtil;
@@ -31,14 +30,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserService {
 
-
     private static final String MINIO_PROFILE_DIR = "profile";
 
     private final AuthUtil authUtil;
     private final UserRepository userRepository;
     private final PostService postService;
     private final MinioUploader minioUploader;
-    private final JwtService jwtService;
     private final FollowService followService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 

@@ -4,7 +4,7 @@ import com.example.backend.domain.feed.dto.*;
 import com.example.backend.domain.feed.entity.Post;
 import com.example.backend.domain.feed.entity.PostLike;
 import com.example.backend.domain.feed.exception.PostCanNotDeleteException;
-import com.example.backend.domain.feed.exception.PostCantUpdateException;
+import com.example.backend.domain.feed.exception.PostCanNotUpdateException;
 import com.example.backend.domain.feed.exception.PostNotExistedException;
 import com.example.backend.domain.feed.repository.CommentRepository;
 import com.example.backend.domain.feed.repository.PostLikeRepository;
@@ -114,7 +114,7 @@ public class PostService {
         Long postCommentCount = commentService.getPostCommentCount(postId);
 
         if (!findPost.getUser().getId().equals(loginUserId)) {
-            new PostCantUpdateException();
+            new PostCanNotUpdateException();
         }
 
         findPost.updateContent(postEditRequest.getContent().isEmpty() ? findPost.getContent() : postEditRequest.getContent());

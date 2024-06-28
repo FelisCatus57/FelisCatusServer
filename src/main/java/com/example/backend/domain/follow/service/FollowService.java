@@ -87,8 +87,6 @@ public class FollowService {
     @Transactional
     public List<FollowingResponse> followingList(String nickname) {
 
-        //TODO 유저에서 팔로잉 리스트로 받아놓은거 받아야함 수정!!!!!! 관련 파일 모두 수정
-
         User findUser = UserRepository.findByNickname(nickname).orElseThrow(
                 () -> new UserNotExistedException());
 

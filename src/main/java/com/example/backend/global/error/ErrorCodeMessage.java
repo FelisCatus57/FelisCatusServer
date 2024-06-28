@@ -32,6 +32,12 @@ public enum ErrorCodeMessage {
     COMMENT_NOT_FOUND(400, "존재 하지 않는 댓글입니다."),
     GET_POST_COMMENT_FAIL(400, "게시글 댓글 조회에 실패 하였습니다."),
     COMMENT_USER_DELETE_FAIL(400, "작성자만 삭제 가능한 댓글입니다."),
+    
+    //Story
+    STORY_NOT_FOUND(400, "존재하지 않는 스토리 입니다."),
+    STORY_USER_NOT_UPLOAD(400, "해당 유저가 스토리를 올리지 않았습니다."),
+    STORY_USER_NOT_EXISTED(400, "해당 유저가 작성한 스토리가 존재하지 않습니다."),
+    STORY_USER_DELETE_FAIL(400, "작성자만 삭제 가능한 스토리입니다."),
 
     // Like
     POST_LIKE_FAIL(400, "게시물 좋아요에 실패하였습니다"),
